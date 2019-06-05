@@ -37,14 +37,7 @@ defined('_JEXEC') or die;
             <?php echo STMModelProject::getStatusText($item->status) ?>
         </td>
         <td class="center">
-            
-            <?php if (!empty($item->document_id)) : ?>
-            <?php 
-                $ids = explode('_', $item->document_id);
-                $link = "https://{$this->server}/editor?DocumentId={$ids[0]}&LanguageId={$ids[1]}";
-            ?>
-            <a href="<?php echo $link; ?>" target="_blank"><?php echo JText::_('COM_STM_GO_TO_SMARTCAT_LINK_TEXT'); ?></a>
-            <?php endif ?>
+            <?php echo $this->getDocumentUrl($item) ?>
         </td>
     </tr>
 <?php endforeach; ?>

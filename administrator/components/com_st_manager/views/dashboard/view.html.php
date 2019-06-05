@@ -15,14 +15,15 @@ use Joomla\CMS\MVC\View\HtmlView;
 defined('_JEXEC') or die;
 
 /**
- * Foo view.
+ * Dashboard view.
  *
- * @package  [PACKAGE_NAME]
- * @since    1.0
+ * @package  Smartcat Translation Manager
+ * @since    1.0.0
  */
 class STMViewDashboard extends HtmlView
 {
-    protected $helper;
+    protected $stmHelper;
+    protected $scHelper;
 
     /**
      * The sidebar to show
@@ -42,7 +43,9 @@ class STMViewDashboard extends HtmlView
      */
     public function __construct($config = array())
     {
-        $this->helper = new STMHelper();
+        $this->stmHelper = new STMHelper();
+        $this->scHelper = SCHelper::getInstance();
+        $this->server = $this->scHelper->getServer();
 
         parent::__construct($config);
     }
@@ -59,8 +62,6 @@ class STMViewDashboard extends HtmlView
      */
     public function display($tpl = null)
     {
-        $this->server = SCHelper::getInstance()->getServer();
-
         $items = $this->get('Items');
         $pagination = $this->get('Pagination');
 
@@ -68,10 +69,15 @@ class STMViewDashboard extends HtmlView
         if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors), 500);
         }
+
+        if (!$this->scHelper->checkAccess()) {
+            JError::raiseError(200, JText::_('COM_STM_INCORRECT_CREDENTIALS'));
+        }
+
         // Show the toolbar
         $this->toolbar();
 
-        $this->helper->addSubmenus('dashboard');
+        $this->stmHelper->addSubmenus('dashboard');
         $this->sidebar = JHtmlSidebar::render();
 
         $this->items = $items;
@@ -97,5 +103,19 @@ class STMViewDashboard extends HtmlView
             //JToolbarHelper::custom('cron.manual', 'checkin', 'checkin', 'Manual Cron Run', false);
             JToolBarHelper::preferences('com_st_manager');
         }
+    }
+
+    protected function getDocumentUrl($item)
+    {
+        if (!empty($item->document_id)) {
+            $ids = explode('_', $item->document_id);
+
+            $link = "https://{$this->server}/editor?DocumentId={$ids[0]}&LanguageId={$ids[1]}";
+            $text = JText::_('COM_STM_GO_TO_SMARTCAT_LINK_TEXT');
+
+            return "<a href='{$link}' target='_blank'>{$text}</a>";
+        }
+
+        return "";
     }
 }

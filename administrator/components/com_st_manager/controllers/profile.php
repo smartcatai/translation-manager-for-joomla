@@ -22,14 +22,41 @@ class STMControllerProfile extends FormController
 {
     protected $option = 'com_st_manager';
 
-    /**
-     * @return bool
-     */
+    private $smartcat;
+
+    public function __construct($config = array())
+    {
+        parent::__construct($config);
+
+        $this->smartcat = SCHelper::getInstance();
+    }
+
     public function add()
     {
-        $smartcat = SCHelper::getInstance();
+        if (!$this->checkAccess()) {
+            return false;
+        }
 
-        if (!$smartcat->checkAccess()) {
+        return parent::add();
+    }
+
+    public function edit($key = null, $urlVar = null)
+    {
+        if (!$this->checkAccess()) {
+            return false;
+        }
+
+        return parent::edit($key, $urlVar);
+    }
+
+    /**
+     * Check access to Smartcat and redirect on error
+     *
+     * @since 1.0.0
+     */
+    private function checkAccess()
+    {
+        if (!$this->smartcat->checkAccess()) {
             $this->setRedirect(
                 JRoute::_('index.php?option=com_st_manager&view=profiles', false),
                 JText::_('COM_STM_INCORRECT_CREDENTIALS'),
@@ -41,6 +68,6 @@ class STMControllerProfile extends FormController
             return false;
         }
 
-        return parent::add();
+        return true;
     }
 }

@@ -95,4 +95,36 @@ class STMViewProfiles extends HtmlView
             JToolbarHelper::deleteList('Do you want delete selected profiles?', 'profiles.edit');
         }
     }
+
+    /**
+     * @param stdClass $item
+     *
+     * @return string
+     *
+     * @since 1.0.0
+     */
+    protected function getTargetLanguages($item)
+    {
+        $items = array_map(function ($value) {
+            return LanguageDictionary::getNameByCode($value);
+        }, explode(',', $item->target_lang));
+
+        return implode(', ', $items);
+    }
+
+    /**
+     * @param stdClass $item
+     *
+     * @return string
+     *
+     * @since 1.0.0
+     */
+    protected function getWorkflowStages($item)
+    {
+        $items = array_map(function ($value) {
+            return ucfirst($value);
+        }, explode(',', $item->stages));
+
+        return implode(', ', $items);
+    }
 }

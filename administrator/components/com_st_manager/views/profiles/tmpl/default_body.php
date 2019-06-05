@@ -31,22 +31,10 @@ defined('_JEXEC') or die;
             <?php echo LanguageDictionary::getNameByCode($item->source_lang); ?>
         </td>
         <td class="center">
-            <?php
-            $items = array_map(function ($value) {
-                return LanguageDictionary::getNameByCode($value);
-            }, explode(',', $item->target_lang));
-
-            echo implode(', ', $items);
-            ?>
+            <?php echo $this->getTargetLanguages($item); ?>
         </td>
         <td class="center">
-            <?php
-            $items = array_map(function ($value) {
-                return ucfirst($value);
-            }, explode(',', $item->stages));
-
-            echo implode(', ', $items);
-            ?>
+            <?php echo $this->getWorkflowStages($item); ?>
         </td>
     </tr>
 <?php endforeach; ?>
