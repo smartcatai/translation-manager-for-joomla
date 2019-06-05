@@ -1,0 +1,35 @@
+language: php
+php: 7.1
+
+env:
+  - PKG_FILENAME=pkg-st-manager-${TRAVIS_BRANCH}-0.1.${TRAVIS_BUILD_NUMBER}.zip
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+before-install:
+  - composer self-update
+
+install:
+  - composer install --no-interaction
+
+branches:
+  only:
+    - /^v\d+(\.\d+)+$/
+    - master
+
+before_script:
+  - cp -R deploy build
+
+script: php build/deploy.php
+
+before_deploy:
+  - cp build/pkg_st_manager.zip ${PKG_FILENAME}
+
+deploy:
+  - provider: releases
+    file: ${PKG_FILENAME}
+    skip_cleanup: true
+    api_key: ${GTIHUB_API_KEY}
+    draft: true
