@@ -20,7 +20,7 @@ branches:
     - master
 
 before_script:
-  - cp -R deploy build
+  - mv deploy build
 
 script: php build/deploy.php
 

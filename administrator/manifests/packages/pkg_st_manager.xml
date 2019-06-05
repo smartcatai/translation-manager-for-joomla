@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<extension type="package" version="3.8" method="upgrade">
+    <name>PKG_ST_MANAGER</name>
+    <packagename>st_manager</packagename>
+    <creationDate>April 2019</creationDate>
+    <author>Smartcat</author>
+    <authorEmail>support@smartcat.ai</authorEmail>
+    <authorUrl>https://smartcat.ai</authorUrl>
+    <copyright>Copyright</copyright>
+    <packager>Smartcat</packager>
+    <packagerurl>http://smartcat.ai</packagerurl>
+    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+    <version>1.0.0</version>
+    <description>PKG_ST_MANAGER_XML_DESCRIPTION</description>
+
+    <scriptfile>install.php</scriptfile>
+    <languages folder="language">
+        <language tag="en-GB">en-GB/en-GB.pkg_st_manager.sys.ini</language>
+    </languages>
+    <files>
+        <file type="component" id="com_st_manager">com_st_manager.zip</file>
+        <file type="plugin" id="stm_check_login" group="extension">plg_stm_check_login.zip</file>
+        <file type="plugin" id="stm_send_to_translate" group="system">plg_stm_send_to_translate.zip</file>
+        <file type="library" id="smartcat_api">lib_smartcat_api.zip</file>
+    </files>
+</extension>

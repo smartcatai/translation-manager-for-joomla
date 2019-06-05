@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset
+			name="auth"
+			label="COM_SMARTCAT_AUTH_FIELDSET_LABEL"
+			description="COM_SMARTCAT_AUTH_FIELDSET_DESCRIPTION"
+			addfieldpath="/administrator/components/com_st_manager/models/fields"
+	>
+		<field
+				name="accountname"
+				type="stm_accountname"
+		/>
+		<field type="spacer" />
+		<field
+				name="server"
+				type="list"
+				label="COM_SMARTCAT_SERVER_LABEL"
+				description="COM_SMARTCAT_SERVER_DESCRIPTION"
+				default="europe"
+		>
+			<option value="europe">COM_SMARTCAT_SERVER_EUROPE_LABEL</option>
+			<option value="usa">COM_SMARTCAT_SERVER_USA_LABEL</option>
+			<option value="asia">COM_SMARTCAT_SERVER_ASIA_LABEL</option>
+		</field>
+		<field
+				name="application_id"
+				type="text"
+				label="COM_SMARTCAT_APPLICATION_ID_LABEL"
+				description="COM_SMARTCAT_APPLICATION_ID_DESCRIPTION"
+				hint="COM_SMARTCAT_APPLICATION_ID_HINT"
+				required="true"
+		/>
+		<field
+				name="api_token"
+				type="stm_token"
+				label="COM_SMARTCAT_API_TOKEN_LABEL"
+				description="COM_SMARTCAT_API_TOKEN_DESCRIPTION"
+				hint="COM_SMARTCAT_API_TOKEN_HINT"
+				required="true"
+		/>
+		<field type="spacer" />
+		<field
+				name="note"
+				type="note"
+				label="COM_SMARTCAT_AUTH_NOTE_NAME"
+				description="COM_SMARTCAT_AUTH_NOTE_DESCRIPTION"
+		/>
+	</fieldset>
+</config>

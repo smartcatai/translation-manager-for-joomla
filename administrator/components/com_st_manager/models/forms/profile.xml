@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset>
+        <field name="id" type="hidden" />
+        <field
+                name="name"
+                type="text"
+                label="COM_STM_PROFILE_NAME_LABEL"
+                description="COM_STM_PROFILE_NAME_DESCRIPTION"
+                class="inputbox"
+                default=""
+        />
+        <field
+                name="vendor"
+                type="stm_vendor"
+                label="COM_STM_PROFILE_VENDOR_LABEL"
+                description="COM_STM_PROFILE_VENDOR_DESCRIPTION"
+                required="true"
+                class="inputbox"
+        />
+        <field
+                name="source_lang"
+                type="stm_language"
+                label="COM_STM_PROFILE_SOURCE_LANGUAGE_LABEL"
+                description="COM_STM_PROFILE_SOURCE_LANGUAGE_DESCRIPTION"
+                required="true"
+                class="inputbox"
+                default="en"
+        />
+        <field
+                name="target_lang"
+                type="stm_language"
+                label="COM_STM_PROFILE_TARGET_LANGUAGES_LABEL"
+                description="COM_STM_PROFILE_TARGET_LANGUAGES_DESCRIPTION"
+                class="inputbox"
+                required="true"
+                multiple="true"
+        />
+        <field
+                name="stages"
+                type="list"
+                label="COM_STM_PROFILE_WORKFLOW_STAGES_LABEL"
+                description="COM_STM_PROFILE_WORKFLOW_STAGES_DESCRIPTION"
+                default="translation"
+                class="form-control"
+                required="true"
+                multiple="true"
+        >
+            <option value="translation">COM_ST_MANAGER_STAGE_TRANSLATION</option>
+            <option value="editing">COM_ST_MANAGER_STAGE_EDITING</option>
+            <option value="proofreading">COM_ST_MANAGER_STAGE_PROOFREADING</option>
+        </field>
+        <!-- <field
+                name="project_guid"
+                type="text"
+                label="COM_STM_PROFILE_PROJECT_GUID_LABEL"
+                description="COM_STM_PROFILE_PROJECT_GUID_DESCRIPTION"
+                class="inputbox"
+                default=""
+        /> -->
+    </fieldset>
+</form>

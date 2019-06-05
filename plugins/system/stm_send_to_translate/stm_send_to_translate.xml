@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.8" type="plugin" group="system" method="upgrade">
+	<name>PLG_STM_SEND_TO_TRANSLATE</name>
+	<creationDate>April 2019</creationDate>
+	<author>Smartcat</author>
+	<authorEmail>support@smartcat.ai</authorEmail>
+	<authorUrl>https://smartcat.ai</authorUrl>
+	<copyright>Copyright</copyright>
+	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+	<version>1.0.0</version>
+	<description>PLG_STM_SEND_TO_TRANSLATE_XML_DESCRIPTION</description>
+	<scriptfile>installer.php</scriptfile>
+	<files>
+		<filename plugin="stm_send_to_translate">stm_send_to_translate.php</filename>
+	</files>
+	<languages folder="language">
+		<language tag="en-GB">en-GB.plg_system_stm_send_to_translate.ini</language>
+		<language tag="en-GB">en-GB.plg_system_stm_send_to_translate.sys.ini</language>
+		<language tag="ru-RU">ru-RU.plg_system_stm_send_to_translate.ini</language>
+		<language tag="ru-RU">ru-RU.plg_system_stm_send_to_translate.sys.ini</language>
+	</languages>
+</extension>

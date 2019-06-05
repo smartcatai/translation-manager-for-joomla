@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.8" type="library" method="upgrade">
+    <name>Smartcat API</name>
+    <libraryname>smartcat_api</libraryname>
+    <description>Smartcat API Client Library</description>
+    <author>Smartcat</author>
+    <creationDate>April 2019</creationDate>
+    <copyright>(C) 2019 Smartcat. All rights reserved.</copyright>
+    <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+    <authorEmail>support@smartcat.ai</authorEmail>
+    <packager>Smartcat</packager>
+    <authorUrl>https://smartcat.ai</authorUrl>
+    <version>2.0.4</version>
+    <files folder="vendor">
+        <folder>clue</folder>
+        <folder>composer</folder>
+        <folder>guzzlehttp</folder>
+        <folder>php-http</folder>
+        <folder>psr</folder>
+        <folder>ralouphie</folder>
+        <folder>smartcat</folder>
+        <folder>symfony</folder>
+        <file>autoload.php</file>
+    </files>
+</extension>

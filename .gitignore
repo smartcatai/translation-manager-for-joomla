@@ -44,8 +44,11 @@ build/
 *.zip
 
 !/administrator/components/com_st_manager
+!/components/com_st_manager
 !/administrator/language/en-GB/*st_manager*
 !/administrator/language/en-GB/*stm_*
+!/administrator/language/ru-RU/*st_manager*
+!/administrator/language/ru-RU/*stm_*
 !/plugins/*/stm_*
 !/language/en-GB/*st_manager*
 !/language/en-GB/*stm_*

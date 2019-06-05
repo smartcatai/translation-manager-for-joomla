@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<extension type="component" version="3.8" method="upgrade">
+	<name>COM_ST_MANAGER</name>
+	<creationDate>April 2019</creationDate>
+	<author>Smartcat</author>
+	<authorEmail>support@smartcat.ai</authorEmail>
+	<authorUrl>https://smartcat.ai</authorUrl>
+	<copyright>Copyright</copyright>
+	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+	<version>1.0.0</version>
+	<description>COM_ST_MANAGER_XML_DESCRIPTION</description>
+
+	<!-- Scripts to run on installation -->
+	<scriptfile>installation.php</scriptfile>
+
+	<!-- Runs on install -->
+	<install>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/install/mysql/mysql.sql</file>
+		</sql>
+	</install>
+
+	<!-- Runs on update -->
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+
+	<files folder="components/com_st_manager">
+		<folder>language</folder>
+		<filename>controller.php</filename>
+		<filename>st_manager.php</filename>
+	</files>
+
+	<languages folder="language">
+		<language tag="ru-RU">ru-RU/ru-RU.com_st_manager.ini</language>
+		<language tag="en-GB">en-GB/en-GB.com_st_manager.ini</language>
+	</languages>
+
+	<!-- Back-end files -->
+	<administration>
+		<!-- Menu entries -->
+		<menu view="dashboard">COM_ST_MANAGER</menu>
+		<submenu>
+			<menu link="option=com_st_manager&amp;view=dashboard">COM_ST_MANAGER_DASHBOARD</menu>
+			<menu link="option=com_st_manager&amp;view=profiles">COM_ST_MANAGER_PROFILES</menu>
+			<menu link="option=com_config&amp;view=component&amp;component=com_st_manager">COM_ST_MANAGER_OPTIONS</menu>
+		</submenu>
+
+		<!-- Core files -->
+		<files folder="administrator/components/com_st_manager">
+			<folder>controllers</folder>
+			<folder>helpers</folder>
+			<folder>language</folder>
+			<folder>models</folder>
+			<folder>sql</folder>
+			<folder>tables</folder>
+			<folder>views</folder>
+			<filename>st_manager.php</filename>
+			<filename>loader.php</filename>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<filename>controller.php</filename>
+			<filename>LICENSE.txt</filename>
+		</files>
+
+		<languages folder="language">
+			<language tag="ru-RU">ru-RU/ru-RU.com_st_manager.ini</language>
+			<language tag="ru-RU">ru-RU/ru-RU.com_st_manager.sys.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_st_manager.sys.ini</language>
+			<language tag="en-GB">en-GB/en-GB.com_st_manager.ini</language>
+		</languages>
+	</administration>
+</extension>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.8" type="plugin" group="extension" method="upgrade">
+	<name>PLG_STM_CHECK_LOGIN</name>
+	<creationDate>April 2019</creationDate>
+	<author>Smartcat</author>
+	<authorEmail>support@smartcat.ai</authorEmail>
+	<authorUrl>https://smartcat.ai</authorUrl>
+	<copyright>Copyright</copyright>
+	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
+	<version>1.0.0</version>
+	<description>PLG_STM_CHECK_LOGIN_XML_DESCRIPTION</description>
+	<scriptfile>installer.php</scriptfile>
+	<files>
+		<filename plugin="stm_check_login">stm_check_login.php</filename>
+	</files>
+	<languages folder="language">
+		<language tag="ru-RU">ru-RU.plg_extension_stm_check_login.ini</language>
+		<language tag="en-GB">en-GB.plg_extension_stm_check_login.ini</language>
+		<language tag="ru-RU">ru-RU.plg_extension_stm_check_login.sys.ini</language>
+		<language tag="en-GB">en-GB.plg_extension_stm_check_login.sys.ini</language>
+	</languages>
+</extension>
