@@ -14,6 +14,7 @@ $gitPath = dirname($basePath);
 $components = ['com_st_manager', 'plg_stm_check_login', 'plg_stm_send_to_translate', 'lib_smartcat_api'];
 
 if ($basePath == "$gitPath/deploy") {
+    exec("rm -rf '$gitPath/build/'*");
     exec("cp -R '$gitPath/deploy/'* '$gitPath/build'");
     $basePath = "$gitPath/build";
 }
@@ -32,8 +33,8 @@ exec("mkdir -p '$gitPath/build/plg_stm_send_to_translate/language'");
 exec("cp -R '$gitPath/administrator/components/com_st_manager' '$gitPath/build/com_st_manager/administrator/components/'");
 exec("cp -R '$gitPath/components/com_st_manager' '$gitPath/build/com_st_manager/components/'");
 exec("mv '$gitPath/build/com_st_manager/administrator/components/com_st_manager/com_st_manager.xml' '$gitPath/build/com_st_manager/com_st_manager.xml'");
-exec("cp -R '$gitPath/plugins/extension/stm_check_login' '$gitPath/build/plg_stm_check_login'");
-exec("cp -R '$gitPath/plugins/system/stm_send_to_translate' '$gitPath/build/plg_stm_send_to_translate'");
+exec("cp -R '$gitPath/plugins/extension/stm_check_login/'* '$gitPath/build/plg_stm_check_login/'");
+exec("cp -R '$gitPath/plugins/system/stm_send_to_translate/'* '$gitPath/build/plg_stm_send_to_translate/'");
 exec("cp -R '$gitPath/libraries/smartcat_api/'* '$gitPath/build/lib_smartcat_api/vendor'");
 exec("cp '$gitPath/administrator/manifests/libraries/smartcat_api.xml' '$gitPath/build/lib_smartcat_api/lib_smartcat_api.xml'");
 exec("cp '$gitPath/administrator/manifests/packages/pkg_st_manager.xml' '$gitPath/build/pkg_st_manager/pkg_st_manager.xml'");

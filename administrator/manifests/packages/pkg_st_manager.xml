@@ -15,7 +15,7 @@
 
     <scriptfile>install.php</scriptfile>
     <languages folder="language">
-        <language tag="en-GB">en-GB/en-GB.pkg_st_manager.sys.ini</language>
+        <language tag="en-GB">en-GB.pkg_st_manager.sys.ini</language>
     </languages>
     <files>
         <file type="component" id="com_st_manager">com_st_manager.zip</file>
