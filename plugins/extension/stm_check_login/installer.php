@@ -25,5 +25,7 @@ class PlgExtensionSTM_Check_LoginInstallerScript
 
         $db->setQuery($query);
         $db->execute();
+
+        JFactory::getApplication()->setUserState('com_st_manager.smartcat.access', false);
     }
 }
