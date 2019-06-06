@@ -11,11 +11,12 @@
     <packagerurl>http://smartcat.ai</packagerurl>
     <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
     <version>1.0.0</version>
-    <description>PKG_ST_MANAGER_XML_DESCRIPTION</description>
+    <description>Smartcat Translation Manager For Joomla 1.0.0</description>
 
     <scriptfile>install.php</scriptfile>
     <languages folder="language">
         <language tag="en-GB">en-GB.pkg_st_manager.sys.ini</language>
+        <language tag="en-GB">en-GB.pkg_st_manager.ini</language>
     </languages>
     <files>
         <file type="component" id="com_st_manager">com_st_manager.zip</file>

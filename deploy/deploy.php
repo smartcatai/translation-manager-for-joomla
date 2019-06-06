@@ -15,7 +15,7 @@ $components = ['com_st_manager', 'plg_stm_check_login', 'plg_stm_send_to_transla
 
 if ($basePath == "$gitPath/deploy") {
     exec("rm -rf '$gitPath/build/'*");
-    exec("cp -R '$gitPath/deploy/'* '$gitPath/build'");
+    exec("cp -R '$gitPath/deploy/'* '$gitPath/build/'");
     $basePath = "$gitPath/build";
 }
 
