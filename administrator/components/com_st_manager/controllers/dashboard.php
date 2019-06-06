@@ -76,7 +76,7 @@ class STMControllerDashboard extends AdminController
             return false;
         }
 
-        if (!SCHelper::getInstance()->checkAccess()) {
+        if (!SCHelper::getInstance()->checkAccess(true)) {
             $this->setRedirect($redirect, JText::_('COM_STM_INCORRECT_CREDENTIALS'), 'error');
             return false;
         }
