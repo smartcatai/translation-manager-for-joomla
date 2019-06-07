@@ -12,6 +12,8 @@
 	<scriptfile>installer.php</scriptfile>
 	<files>
 		<filename plugin="stm_send_to_translate">stm_send_to_translate.php</filename>
+		<filename>modal.html</filename>
+		<filename>modal_script.js</filename>
 	</files>
 	<languages folder="language">
 		<language tag="en-GB">en-GB.plg_system_stm_send_to_translate.ini</language>

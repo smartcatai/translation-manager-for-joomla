@@ -10,6 +10,26 @@
 
 class Pkg_St_ManagerInstallerScript
 {
+    const MIN_PHP_COM_VERSION = '7.0.0';
+
+    /**
+     * @param $type
+     * @param $parent
+     *
+     *
+     * @throws Exception
+     * @since 1.0.0
+     */
+    public function preflight($type, $parent)
+    {
+        if (version_compare(PHP_VERSION, self::MIN_PHP_COM_VERSION) < 0) {
+            JError::raiseError(200, 'This PHP version is unsupported by component. Minimal version is ' . self::MIN_PHP_COM_VERSION);
+            return false;
+        }
+
+        return true;
+    }
+
     public function postflight($type, $parent)
     {
         if ($type !== 'install') {
@@ -26,26 +46,7 @@ class Pkg_St_ManagerInstallerScript
         $modal_params['height'] = "500px";
         $modal_params['width'] = "400px";
 
-        $body = <<<EOD
-<!--[if lte IE 8]>
-<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2-legacy.js"></script>
-<![endif]-->
-<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/v2.js"></script>
-<script>
-hbspt.forms.create({
-    portalId: "4950983",
-    formId: "5da21dc3-49d9-49bb-aec1-2272338dbdcb",
-    onFormReady: function(form){
-        form.find('input[name="utm_source"]').val('connectors')
-        form.find('input[name="utm_medium"]').val('referral')
-        form.find('input[name="utm_campaign"]').val('joomla')
-    },
-    onFormSubmit: function(){
-        jQuery("#hbsptModal").modal("hide");
-    },
-});
-</script>
-EOD;
+        $body = file_get_contents(__DIR__ . '/modal.html');
 
         echo JHTML::_('bootstrap.renderModal', 'hbsptModal', $modal_params, $body);
         echo '<script>setTimeout(function(){jQuery("#hbsptModal").modal("show");}, 500)</script>';

@@ -1,0 +1,23 @@
+<div id="modal-stm-profile-form" class="modal hide fade">
+    <div class="modal-header">
+        <button id="modal-close-btn" type="button" role="presentation" class="close" data-dismiss="modal">x</button>
+        <h3>{{TITLE}}</h3>
+    </div>
+    <div class="modal-body raw" style="padding: 20px 0 0 20px">
+        <div class="control-group container">
+            <form id="form-stm" class="form-horizontal">
+                <div class="control-label">
+                    <label for="profile_id">{{SELECT_PROFILE}}</label>
+                </div>
+                <div class="controls">
+                    <select class="form-control" id="profile_id" name="profile_id">
+                        {{OPTIONS}}
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-success" onclick="stmSubmit();">{{SUBMIT}}</button>
+    </div>
+</div>

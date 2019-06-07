@@ -20,6 +20,8 @@ class PlgSystemstm_send_to_translate extends CMSPlugin
 {
     const RELATED_COMPONENT_NAME = 'com_st_manager';
 
+    protected $autoloadLanguage = true;
+
     public function onBeforeRender()
     {
         // Get the application object
@@ -37,27 +39,25 @@ class PlgSystemstm_send_to_translate extends CMSPlugin
                 // Get an instance of the Toolbar
                 $toolbar = JToolbar::getInstance('toolbar');
 
-                // Add your custom button here
-                $url = JRoute::_('index.php?option='.self::RELATED_COMPONENT_NAME.'&task=dashboard.add');
-                $profile_url = JRoute::_('index.php?option='.self::RELATED_COMPONENT_NAME.'&view=profile&layout=edit');
-
                 $layout = new JLayoutFile('joomla.toolbar.popup');
-                //$toolbar->appendButton('Standard', 'edit', 'Submit for translation', 'dashboard.add');
-                $dhtml = $layout->render(array('name' => 'stm-profile-form', 'text' => JText::_('Submit for translation'), 'class' => 'icon-edit', 'doTask' => ''));
+
+                $dhtml = $layout->render(array(
+                    'name' => 'stm-profile-form',
+                    'text' => JText::_('PLG_STM_SEND_TO_TRANSLATE_BTN_LABEL'),
+                    'class' => 'icon-edit',
+                    'doTask' => ''
+                ));
+
                 $toolbar->appendButton('Custom', $dhtml);
 
+                $jsCode = file_get_contents(__DIR__ . '/modal_script.js');
+                $jsCode = str_replace(
+                    "{{ERROR_MESSAGE}}",
+                    JText::_('PLG_STM_SEND_TO_TRANSLATE_MODAL_ERROR_MESSAGE'),
+                    $jsCode
+                );
 
-                JFactory::getDocument()->addScriptDeclaration('function stmSubmit() {
-	    $form = document.getElementById("adminForm");
-	    $profile_id = document.getElementById("profile_id").value;
-	    if ($profile_id) {
-	        $form.setAttribute("action", "'.$url.'&profile_id=" + $profile_id)
-	        Joomla.submitform("dashboard.add", $form);
-	    } else {
-	        Joomla.renderMessages({"error":["No translation profiles found. Please create a profile <a href=\"'.$profile_url.'\">here</a>."]});
-	        document.getElementById("modal-close-btn").click();
-	    }
-    };');
+                JFactory::getDocument()->addScriptDeclaration($jsCode);
             }
         }
     }
@@ -89,34 +89,15 @@ class PlgSystemstm_send_to_translate extends CMSPlugin
                     $options[] = "<option value='{$profile->id}'>{$profile->name}</option>";
                 }
 
-                $options = implode('<br />', $options);
+                $replacer = [
+                    '{{TITLE}}' => JText::_('PLG_STM_SEND_TO_TRANSLATE_MODAL_TITLE'),
+                    '{{SELECT_PROFILE}}' => JText::_('PLG_STM_SEND_TO_TRANSLATE_MODAL_SELECT_PROFILE_LABEL'),
+                    '{{OPTIONS}}' => implode('<br />', $options),
+                    '{{SUBMIT}}' => JText::_('PLG_STM_SEND_TO_TRANSLATE_MODAL_SUBMIT_BUTTON'),
+                ];
 
-                $html =
-                    <<<HTML
-<div id="modal-stm-profile-form" class="modal hide fade">
-    <div class="modal-header">
-        <button id="modal-close-btn" type="button" role="presentation" class="close" data-dismiss="modal">x</button>
-        <h3>Select Profile</h3>
-    </div>
-    <div class="modal-body raw" style="padding: 20px 0 0 20px">
-        <div class="control-group container">
-            <form id="form-stm" class="form-horizontal">
-            <div class="control-label">
-			    <label for="profile_id">Select profile:</label>
-			</div>
-			<div class="controls">
-			    <select class="form-control" id="profile_id" name="profile_id">
-                    {$options}
-                </select>
-			</div>
-            </form> 
-        </div> 
-    </div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-success" onclick="stmSubmit();">Submit</button>
-    </div>    
-</div>
-HTML;
+                $html = file_get_contents(__DIR__ . '/modal.html');
+                $html = str_replace(array_keys($replacer), array_values($replacer), $html);
 
                 $app->appendBody($html);
             }
