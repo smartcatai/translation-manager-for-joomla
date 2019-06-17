@@ -1,0 +1,17 @@
+<updates>
+    <update>
+        <name>Smartcat Translation Manager package</name>
+        <description>Smartcat Translation Manager For Joomla </description>
+        <element>pkg_st_manager</element>
+        <type>package</type>
+        <version>1.0.0</version>
+        <infourl title="Smartcat!">https://smartcat.ai/</infourl>
+        <downloads>
+            <downloadurl type="full" format="zip">https://smartcatai.github.io/translation-manager-for-joomla/build/pkg_st_manager.zip</downloadurl>
+        </downloads>
+        <tags>
+            <tag>stable</tag>
+        </tags>
+        <targetplatform name="joomla" version="3.[789]"/>
+    </update>
+</updates>

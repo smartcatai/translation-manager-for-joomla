@@ -1,6 +1,6 @@
 /.htaccess
 .idea/
-build/
+/build/*
 .DS_Store
 /administrator/cache/*
 /administrator/components/*
@@ -54,3 +54,4 @@ build/
 !/language/en-GB/*stm_*
 !/administrator/manifests/packages/pkg_st_manager.xml
 !/administrator/manifests/libraries/smartcat_api.xml
+!build/pkg_st_manager.zip
