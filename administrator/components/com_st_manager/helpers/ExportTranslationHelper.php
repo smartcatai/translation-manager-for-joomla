@@ -95,10 +95,10 @@ class ExportTranslationHelper
 
         $mimeType = $response->getHeaderLine('Content-Type');
 
-        if ($mimeType === 'text/html') {
-            return $this->fileHelper->parseHtmlMarkup($response->getBody()->getContents());
-        } else {
-            return false;
+        if ($mimeType !== 'application/json') {
+            throw new \Exception('Mime type is not valid: ' . $mimeType);
         }
+
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

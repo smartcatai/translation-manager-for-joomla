@@ -8,12 +8,21 @@
  * @link       http://smartcat.ai
  */
 
+use Joomla\Registry\Registry;
 use \Symfony\Component\Lock\Factory;
 
 defined('_JEXEC') or die('Restricted access');
 
 class STMController extends JControllerLegacy
 {
+    const FIELDS_EXCEPT = [
+        'images' => ['image_intro', 'image_fulltext'],
+        'urls' => [
+            'urla',
+            'urlb',
+            'urlc',
+        ],
+    ];
     private $fileHelper;
     private $projectHelper;
     private $scHelper;
@@ -65,7 +74,7 @@ class STMController extends JControllerLegacy
      */
     private function sendProjects()
     {
-        $fieldNames = ['title', 'articletext'];
+        $fieldNames = ['title', 'articletext', 'images', 'urls'];
         $documents = [];
         $projectNames = [];
 
@@ -81,10 +90,18 @@ class STMController extends JControllerLegacy
             $fields = [];
 
             foreach ($fieldNames as $name) {
-                $fields[$name] = $item->$name;
+                $value = $item->$name;
+                if (array_key_exists($name, self::FIELDS_EXCEPT)) {
+                    if (is_array($value)) {
+                        foreach (self::FIELDS_EXCEPT[$name] as $field_except) {
+                            unset($value[$field_except]);
+                        }
+                    }
+                }
+                $fields[$name] = $value;
             }
 
-            $fileName = "{$item->title}_{$project->target_lang}.html";
+            $fileName = "{$item->title}_{$project->target_lang}.json";
             $file = $this->fileHelper->createFile($fields);
 
             if ($file) {
@@ -256,16 +273,24 @@ class STMController extends JControllerLegacy
                 $article->language = LanguageDictionary::codeConvertToJoomla($project->target_lang);
 
                 foreach ($fields as $field => $value) {
-                    if ($field === 'title') {
-                        $article->alias = $article->alias . '-' . $article->language;
-                    }
-
                     if ($field === 'articletext') {
                         $field = 'introtext';
                     }
 
+                    if ($field === 'images' || $field === 'urls') {
+                        $source_value = json_decode($article->$field, true);
+                        if (array_key_exists($field, self::FIELDS_EXCEPT)) {
+                            foreach (self::FIELDS_EXCEPT[$field] as $field_except) {
+                                $value[$field_except] = $source_value[$field_except];
+                            }
+                        }
+                        $value = (string) new Registry($value);
+                    }
+
                     $article->$field = $value;
                 }
+
+                $article->alias = $article->alias . '-' . $article->language;
 
                 if ($article->check()) {
                     $article->id = null;
