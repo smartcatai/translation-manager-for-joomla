@@ -10,6 +10,10 @@
 	<version>1.0.0</version>
 	<description>COM_ST_MANAGER_XML_DESCRIPTION</description>
 
+	<updateservers>
+		<server type="package" name="">https://smartcatai.github.io/translation-manager-for-joomla/manifest.xml</server>
+	</updateservers>
+
 	<!-- Scripts to run on installation -->
 	<scriptfile>installation.php</scriptfile>
 

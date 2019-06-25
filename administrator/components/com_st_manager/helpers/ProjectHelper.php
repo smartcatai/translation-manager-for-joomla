@@ -8,10 +8,12 @@
  * @link       http://smartcat.ai
  */
 
-
 use SmartCat\Client\Model\BilingualFileImportSettingsModel;
 use SmartCat\Client\Model\CreateDocumentPropertyWithFilesModel;
 use SmartCat\Client\Model\CreateProjectModel;
+
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 class ProjectHelper
 {

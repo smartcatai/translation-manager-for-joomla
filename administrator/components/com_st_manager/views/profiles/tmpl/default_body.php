@@ -8,9 +8,10 @@
  * @link       http://smartcat.ai
  */
 
-require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/LanguageDictionary.php';
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
-defined('_JEXEC') or die;
+require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/LanguageDictionary.php';
 
 ?>
 <?php foreach ($this->items as $i => $item) :?>

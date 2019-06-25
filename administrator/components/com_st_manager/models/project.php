@@ -10,7 +10,8 @@
 
 use Joomla\CMS\MVC\Model\AdminModel;
 
-defined('_JEXEC') or die;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 /**
  * Project Model

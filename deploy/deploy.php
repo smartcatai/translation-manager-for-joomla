@@ -38,6 +38,11 @@ exec("cp -R '$gitPath/plugins/system/stm_send_to_translate/'* '$gitPath/build/pl
 exec("cp -R '$gitPath/libraries/smartcat_api/'* '$gitPath/build/lib_smartcat_api/vendor'");
 exec("cp '$gitPath/administrator/manifests/libraries/smartcat_api.xml' '$gitPath/build/lib_smartcat_api/lib_smartcat_api.xml'");
 exec("cp '$gitPath/administrator/manifests/packages/pkg_st_manager.xml' '$gitPath/build/pkg_st_manager/pkg_st_manager.xml'");
+exec("cp '$gitPath/license.txt' '$gitPath/build/pkg_st_manager/license.txt'");
+exec("cp '$gitPath/license.txt' '$gitPath/build/com_st_manager/license.txt'");
+exec("cp '$gitPath/license.txt' '$gitPath/build/lib_smartcat_api/license.txt'");
+exec("cp '$gitPath/license.txt' '$gitPath/build/plg_stm_check_login/license.txt'");
+exec("cp '$gitPath/license.txt' '$gitPath/build/plg_stm_send_to_translate/license.txt'");
 
 // Copy languages
 exec("cp '$gitPath/administrator/language/en-GB/'*stm_send_to_translate* '$gitPath/build/plg_stm_send_to_translate/language'");

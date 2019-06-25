@@ -8,9 +8,10 @@
  * @link       http://smartcat.ai
  */
 
-require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/SCHelper.php';
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
-defined('_JEXEC') or die;
+require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/SCHelper.php';
 
 JFormHelper::loadFieldClass('note');
 

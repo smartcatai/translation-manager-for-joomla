@@ -10,7 +10,8 @@
 
 use Joomla\CMS\Language\Text;
 
-defined('_JEXEC') or die;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 /**
  * Smartcat Translation Manager helper.

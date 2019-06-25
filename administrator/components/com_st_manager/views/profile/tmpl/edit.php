@@ -8,7 +8,8 @@
  * @link       http://smartcat.ai
  */
 
-defined('_JEXEC') or die;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 ?>
 <form action="<?php echo JRoute::_('index.php?option=com_st_manager&layout=edit&id=' . (int) $this->item->id); ?>"

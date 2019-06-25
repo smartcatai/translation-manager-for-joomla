@@ -10,7 +10,8 @@
 
 use Joomla\CMS\MVC\Model\ListModel;
 
-defined('_JEXEC') or die;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 /**
  * Profiles Model

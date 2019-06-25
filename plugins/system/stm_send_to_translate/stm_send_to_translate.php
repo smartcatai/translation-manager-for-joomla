@@ -8,9 +8,11 @@
  * @link       http://smartcat.ai
  */
 
-defined('_JEXEC') or die;
-
 use Joomla\CMS\Plugin\CMSPlugin;
+
+// no direct access
+defined('_JEXEC') or die('Restricted access');
+
 /**
  * An example custom profile plugin.
  *
@@ -69,14 +71,12 @@ class PlgSystemstm_send_to_translate extends CMSPlugin
         $app = JFactory::getApplication();
 
         // Run in backend
-        if ($app->isAdmin() === true)
-        {
+        if ($app->isAdmin() === true) {
             // Get the input object
             $input = $app->input;
 
             // Append button just on Articles
-            if ($input->getCmd('option') === 'com_content' && $input->getCmd('view', 'articles') === 'articles')
-            {
+            if ($input->getCmd('option') === 'com_content' && $input->getCmd('view', 'articles') === 'articles') {
                 JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . '/components/com_st_manager/models');
 
                 /** @var STMModelProfiles $modelInstance */

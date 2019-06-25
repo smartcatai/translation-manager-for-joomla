@@ -8,9 +8,7 @@
  * @link       http://smartcat.ai
  */
 
-use Joomla\CMS\Table\Table;
-
-// No direct access
+// no direct access
 defined('_JEXEC') or die('Restricted access');
 
 class STMTableProfiles extends JTable

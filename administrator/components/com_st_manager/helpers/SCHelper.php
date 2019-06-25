@@ -9,7 +9,9 @@
  */
 
 use SmartCat\Client\SmartCat;
-use SmartCat\Client\Model\CallbackPropertyModel;
+
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 require_once JPATH_LIBRARIES . '/smartcat_api/autoload.php';
 
