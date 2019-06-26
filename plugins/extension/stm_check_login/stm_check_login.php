@@ -70,7 +70,6 @@ class PlgExtensionStm_Check_Login extends JPlugin
         $sc = new SmartCat($params['application_id'], $params['api_token'], $server);
 
         try {
-            JFactory::getApplication()->setUserState('com_st_manager.smartcat.access', false);
             $sc->getAccountManager()->accountGetAccountInfo();
             $params['api_token'] = SCHelper::encryptToken($params['api_token']);
             $table->params = json_encode($params);
