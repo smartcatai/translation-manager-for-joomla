@@ -72,7 +72,7 @@ class STMViewDashboard extends HtmlView
         }
 
         if (!$this->scHelper->checkAccess()) {
-            JError::raiseError(200, JText::_('COM_STM_INCORRECT_CREDENTIALS'));
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_STM_INCORRECT_CREDENTIALS'), 'error');
         }
 
         // Show the toolbar

@@ -21,6 +21,8 @@ if ($basePath == "$gitPath/deploy") {
 
 $pkgPath = $basePath . '/pkg_st_manager';
 
+echo("Preparing..." . PHP_EOL);
+
 // Create folders
 exec("mkdir -p '$gitPath/build/com_st_manager/administrator/components'");
 exec("mkdir -p '$gitPath/build/com_st_manager/components'");
@@ -50,6 +52,21 @@ exec("cp '$gitPath/administrator/language/en-GB/'*stm_check_login* '$gitPath/bui
 exec("cp '$gitPath/administrator/language/ru-RU/'*stm_send_to_translate* '$gitPath/build/plg_stm_send_to_translate/language'");
 exec("cp '$gitPath/administrator/language/ru-RU/'*stm_check_login* '$gitPath/build/plg_stm_check_login/language'");
 exec("cp '$gitPath/language/en-GB/'*pkg_st_manager* '$gitPath/build/pkg_st_manager/language'");
+
+//Delete test directories
+exec("rm -rf '$gitPath/build/lib_smartcat_api/vendor/clue/stream-filter/tests'");
+exec("rm -rf '$gitPath/build/lib_smartcat_api/vendor/clue/stream-filter/examples'");
+exec("rm -rf '$gitPath/build/lib_smartcat_api/vendor/ralouphie/getallheaders/tests'");
+exec("rm -rf '$gitPath/build/lib_smartcat_api/vendor/symfony/lock/Tests'");
+exec("rm -rf '$gitPath/build/lib_smartcat_api/vendor/symfony/options-resolver/Tests'");
+exec("rm -rf '$gitPath/build/lib_smartcat_api/vendor/symfony/serializer/Tests'");
+
+//Add custom header to all composer php files
+echo("Adding headers" . PHP_EOL);
+$files = Filesystem::globRecursive("$gitPath/build/lib_smartcat_api/*.php");
+foreach ($files as $file) {
+    Filesystem::prependToFile($file, "$gitPath/build/headers");
+}
 
 @unlink($basePath . '/pkg_st_manager.zip');
 
@@ -116,5 +133,34 @@ class Filesystem
         }
         self::folderToZip($sourcePath, $z, strlen("$parentPath/"));
         $z->close();
+    }
+
+    public static function globRecursive($pattern, $flags = 0, $exclude = [])
+    {
+        $files = glob($pattern, $flags);
+        foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
+            if ( in_array( $dir, $exclude ) ) {
+                continue;
+            }
+            $files = array_merge($files, self::globRecursive($dir.'/'.basename($pattern), $flags, $exclude));
+        }
+        return $files;
+    }
+
+    public static function prependToFile($fileToPrepend, $prependFile) {
+        $data = file_get_contents($fileToPrepend);
+        $header = file_get_contents($prependFile);
+        $count = 0;
+
+        $restrict = "// no direct access\ndefined('_JEXEC') or die('Restricted access');";
+        $data = preg_replace('%^\s*(namespace .*)$\s*%m', "$1\n\n$restrict\n\n", $data, -1, $count);
+
+        if ($count === 0) {
+            $header .= "\n$restrict\n";
+        }
+
+        $data = str_replace('<?php', $header, $data);
+
+        file_put_contents($fileToPrepend, $data);
     }
 }

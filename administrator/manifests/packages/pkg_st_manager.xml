@@ -13,7 +13,12 @@
     <version>1.0.0</version>
     <description>Smartcat Translation Manager For Joomla 1.0.0</description>
 
+    <updateservers>
+        <server type="package" name="">https://smartcatai.github.io/translation-manager-for-joomla/manifest.xml</server>
+    </updateservers>
+
     <scriptfile>install.php</scriptfile>
+
     <languages folder="language">
         <language tag="en-GB">en-GB.pkg_st_manager.sys.ini</language>
         <language tag="en-GB">en-GB.pkg_st_manager.ini</language>
