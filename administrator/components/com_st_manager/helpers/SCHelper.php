@@ -57,22 +57,13 @@ class SCHelper extends SmartCat
     }
 
     /**
-     * @param bool $force
      * @return bool
      */
-    public function checkAccess($force = false)
+    public function checkAccess()
     {
-        $application = JFactory::getApplication();
-
         try {
-            $access_cache = $application->getUserState('com_st_manager.smartcat.access', false);
-
-            if (!$access_cache || $force) {
-                $this->getAccountManager()->accountGetAccountInfo();
-                $application->setUserState('com_st_manager.smartcat.access', true);
-            }
+            $this->getAccountManager()->accountGetAccountInfo();
         } catch (\Throwable $e) {
-            $application->setUserState('com_st_manager.smartcat.access', false);
             return false;
         }
 
