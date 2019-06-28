@@ -12,11 +12,11 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 
-defined('_JEXEC') or die;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 // Access check.
-if (!Factory::getUser()->authorise('core.manage', 'com_st_manager'))
-{
+if (!Factory::getUser()->authorise('core.manage', 'com_st_manager')) {
 	throw new InvalidArgumentException(Text::_('JERROR_ALERTNOAUTHOR'), 404);
 }
 

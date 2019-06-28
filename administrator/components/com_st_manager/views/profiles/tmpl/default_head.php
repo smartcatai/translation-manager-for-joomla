@@ -8,7 +8,8 @@
  * @link       http://smartcat.ai
  */
 
-defined('_JEXEC') or die;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 ?>
 <tr>

@@ -8,11 +8,12 @@
  * @link       http://smartcat.ai
  */
 
+// no direct access
+defined('_JEXEC') or die('Restricted access');
+
 include_once JPATH_COMPONENT_ADMINISTRATOR . '/models/project.php';
-
-defined('_JEXEC') or die;
-
 ?>
+
 <?php foreach ($this->items as $i => $item) :?>
     <tr class="row<?php echo $i % 2; ?>">
         <td class="center">

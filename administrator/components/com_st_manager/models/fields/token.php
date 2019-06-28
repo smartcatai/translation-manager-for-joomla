@@ -7,7 +7,9 @@
  * @license    GNU General Public License version 3 or later; see LICENSE.txt
  * @link       http://smartcat.ai
  */
-defined('_JEXEC') or die;
+
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 JFormHelper::loadFieldClass('password');
 

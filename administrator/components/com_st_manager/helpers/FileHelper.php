@@ -10,6 +10,9 @@
  * @since 1.0.0
  */
 
+// no direct access
+defined('_JEXEC') or die('Restricted access');
+
 class FileHelper
 {
     const FIELD_TAG = '<field id="%s">%s</field>';

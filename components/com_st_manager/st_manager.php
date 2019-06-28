@@ -10,6 +10,7 @@
 
 use Joomla\CMS\Language\Text;
 
+// no direct access
 defined('_JEXEC') or die('Restricted access');
 
 if (!is_file(JPATH_LIBRARIES . '/smartcat_api/autoload.php')) {

@@ -12,7 +12,8 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\HtmlView;
 
-defined('_JEXEC') or die;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 /**
  * Dashboard view.
@@ -71,7 +72,7 @@ class STMViewDashboard extends HtmlView
         }
 
         if (!$this->scHelper->checkAccess()) {
-            JError::raiseError(200, JText::_('COM_STM_INCORRECT_CREDENTIALS'));
+            JFactory::getApplication()->enqueueMessage(JText::_('COM_STM_INCORRECT_CREDENTIALS'), 'error');
         }
 
         // Show the toolbar

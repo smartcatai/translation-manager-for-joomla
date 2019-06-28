@@ -8,6 +8,9 @@
  * @link       http://smartcat.ai
  */
 
+// no direct access
+defined('_JEXEC') or die('Restricted access');
+
 class Pkg_St_ManagerInstallerScript
 {
     const MIN_PHP_COM_VERSION = '7.0.0';
@@ -23,7 +26,11 @@ class Pkg_St_ManagerInstallerScript
     public function preflight($type, $parent)
     {
         if (version_compare(PHP_VERSION, self::MIN_PHP_COM_VERSION) < 0) {
-            JError::raiseError(200, 'This PHP version is unsupported by component. Minimal version is ' . self::MIN_PHP_COM_VERSION);
+            JFactory::getApplication()->enqueueMessage(
+                'This PHP version is unsupported by component. Minimal version is ' . self::MIN_PHP_COM_VERSION,
+                'error'
+            );
+
             return false;
         }
 

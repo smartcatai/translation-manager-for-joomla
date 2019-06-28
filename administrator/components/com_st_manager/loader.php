@@ -8,7 +8,9 @@
  * @link       http://smartcat.ai
  */
 
-foreach (glob(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/*.php') as $filename)
-{
-    include_once $filename;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
+
+foreach (glob(JPATH_COMPONENT_ADMINISTRATOR . '/helpers/*.php') as $filename) {
+    require_once $filename;
 }

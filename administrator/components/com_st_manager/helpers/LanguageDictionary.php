@@ -8,6 +8,9 @@
  * @link       http://smartcat.ai
  */
 
+// no direct access
+defined('_JEXEC') or die('Restricted access');
+
 class LanguageDictionary
 {
     /**

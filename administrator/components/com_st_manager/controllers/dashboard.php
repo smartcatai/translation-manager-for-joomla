@@ -10,7 +10,8 @@
 
 use Joomla\CMS\MVC\Controller\AdminController;
 
-defined('_JEXEC') or die;
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 /**
  * Smartcat Translation Manager Da Controller.
