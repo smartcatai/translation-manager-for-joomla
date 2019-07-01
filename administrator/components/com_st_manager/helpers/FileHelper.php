@@ -15,7 +15,6 @@ defined('_JEXEC') or die('Restricted access');
 
 class FileHelper
 {
-    const FIELD_TAG = '<field id="%s">%s</field>';
 
     /**
      * current instance
@@ -47,51 +46,13 @@ class FileHelper
      */
     public function createFile($fields)
     {
-        $content = $this->generateHtmlMarkup($fields);
+        $content = json_encode($fields);
 
         $file = fopen("php://temp", "r+");
         fputs($file, $content);
         rewind($file);
 
         return $file;
-    }
-
-    /**
-     * @param array $fields
-     * @return string
-     */
-    protected function generateHtmlMarkup($fields)
-    {
-        $data = [];
-
-        foreach ($fields as $field => $value) {
-            $data[] = sprintf(self::FIELD_TAG, $field, $value);
-        }
-
-        return '<html><head></head><body>' . implode('', $data) . '</body></html>';
-    }
-
-    /**
-     * @param string $content
-     * @return array
-     */
-    public function parseHtmlMarkup($content)
-    {
-        $fieldPattern = str_replace('/', '\/', sprintf(self::FIELD_TAG, '(.+?)', '(.*?)'));
-
-        $matches = [];
-
-        preg_match_all('/' . $fieldPattern . '/is', $content, $matches);
-
-        $fields = [];
-
-        foreach ($matches[1] as $i => $field) {
-            $value = $matches[2][$i];
-
-            $fields[$field] = $this->specialcharsDecode($value);
-        }
-
-        return $fields;
     }
 
     /**
