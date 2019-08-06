@@ -29,6 +29,7 @@ class STMController extends JControllerLegacy
     private $projectsModel;
     /** @var STMModelProject $projectModel */
     private $projectModel;
+    private $logger;
 
     private $errorMessages = [];
     private $successMessages = [];
@@ -57,6 +58,7 @@ class STMController extends JControllerLegacy
         $this->profileModel = parent::getModel('Profile', 'STMModel', array('ignore_request' => true));
         $this->projectsModel = parent::getModel('Projects', 'STMModel', array('ignore_request' => true));
         $this->projectModel = parent::getModel('Project', 'STMModel', array('ignore_request' => true));
+        $this->logger = new LoggerHelper();
     }
 
     /**
@@ -73,6 +75,7 @@ class STMController extends JControllerLegacy
         $projects = $this->projectsModel->getByStatus(STMModelProject::STATUS_WAITING);
 
         if (empty($projects)) {
+            $this->logger->event('send', 'No projects to send');
             $this->successMessages[] = 'No projects to send';
             return;
         }
@@ -100,6 +103,7 @@ class STMController extends JControllerLegacy
         $projectName = implode(', ', $projectNames);
 
         if (empty($documents)) {
+            $this->logger->error('Can\'t send documents', 'No documents to send');
             $this->errorMessages[] = 'No documents to send';
             return;
         }
@@ -132,6 +136,7 @@ class STMController extends JControllerLegacy
             $this->projectModel->save($data);
         }
 
+        $this->logger->event('check', sprintf("Sended %d projects", count($scDocuments)));
         $this->successMessages[] = sprintf("Sended %d projects", count($scDocuments));
     }
 
@@ -150,6 +155,7 @@ class STMController extends JControllerLegacy
         ]);
 
         if (empty($projects)) {
+            $this->logger->event('check', 'No projects to update');
             $this->successMessages[] = 'No projects to update';
             return;
         }
@@ -178,6 +184,7 @@ class STMController extends JControllerLegacy
             }
         }
 
+        $this->logger->event('check', sprintf("Updated %d projects", count($updatedProjects)));
         $this->successMessages[] = sprintf("Updated %d projects", count($updatedProjects));
     }
 
@@ -193,6 +200,7 @@ class STMController extends JControllerLegacy
         $projects = $this->projectsModel->getByStatus(STMModelProject::STATUS_COMPLETED);
 
         if (empty($projects)) {
+            $this->logger->event('request', 'No projects to request');
             $this->successMessages[] = 'No projects to request';
             return;
         }
@@ -219,6 +227,7 @@ class STMController extends JControllerLegacy
             $requestedProjects[] = $project;
         }
 
+        $this->logger->event('request', sprintf("Requested %d projects", count($requestedProjects)));
         $this->successMessages[] = sprintf("Requested %d projects", count($requestedProjects));
     }
 
@@ -235,6 +244,7 @@ class STMController extends JControllerLegacy
         $projects = $this->projectsModel->getByStatus(STMModelProject::STATUS_ON_EXPORT);
 
         if (empty($projects)) {
+            $this->logger->event('recieve', 'No projects to receive');
             $this->successMessages[] = 'No projects to receive';
             return;
         }
@@ -290,6 +300,7 @@ class STMController extends JControllerLegacy
                 ['document_id' => $documentsDownloadError]
             );
             if (!$result) {
+                $this->logger->error('Can\'t set status failed to failed documents', json_encode($documentsDownloadError));
                 $this->errorMessages[] = 'Can\'t set status failed to failed documents: ' . json_encode($documentsDownloadError);
             }
         }
@@ -300,10 +311,12 @@ class STMController extends JControllerLegacy
                 ['document_id' => $documentsDownloadSuccess]
             );
             if (!$result) {
+                $this->logger->error('Can\'t set status downloaded to success documents', json_encode($documentsDownloadSuccess));
                 $this->errorMessages[] = 'Can\'t set status downloaded to success documents: ' . json_encode($documentsDownloadSuccess);
             }
         }
 
+        $this->logger->event('recieve', sprintf("Received %d projects", count($documentsDownloadSuccess)));
         $this->successMessages[] = sprintf("Received %d projects", count($documentsDownloadSuccess));
     }
 
@@ -315,10 +328,12 @@ class STMController extends JControllerLegacy
     public function cron()
     {
         return $this->getResponse(function () {
+            $this->logger->event('cron', 'Cron started');
             $this->checkProjects();
             $this->sendProjects();
             $this->requestProjects();
             $this->receiveProjects();
+            $this->logger->event('cron', 'Cron ended');
         });
     }
 
@@ -330,7 +345,9 @@ class STMController extends JControllerLegacy
     public function check()
     {
         return $this->getResponse(function () {
+            $this->logger->event('check', 'Check started');
             $this->checkProjects();
+            $this->logger->event('check', 'Check started');
         });
     }
 
@@ -342,7 +359,9 @@ class STMController extends JControllerLegacy
     public function send()
     {
         return $this->getResponse(function () {
+            $this->logger->event('send', 'Send started');
             $this->sendProjects();
+            $this->logger->event('send', 'Send started');
         });
     }
 
@@ -354,7 +373,9 @@ class STMController extends JControllerLegacy
     public function request()
     {
         return $this->getResponse(function () {
+            $this->logger->event('request', 'Request started');
             $this->requestProjects();
+            $this->logger->event('request', 'Request started');
         });
     }
 
@@ -366,7 +387,9 @@ class STMController extends JControllerLegacy
     public function receive()
     {
         return $this->getResponse(function () {
+            $this->logger->event('recieve', 'Recieve started');
             $this->receiveProjects();
+            $this->logger->event('recieve', 'Recieve started');
         });
     }
 
@@ -387,9 +410,11 @@ class STMController extends JControllerLegacy
             if ($this->scHelper->checkAccess()) {
                 $task();
             } else {
+                $this->logger->error('Invalid credentials', JText::_('COM_STM_INCORRECT_CREDENTIALS'));
                 $this->errorMessages[] = JText::_('COM_STM_INCORRECT_CREDENTIALS');
             }
         } else {
+            $this->logger->error('Cron fast use', JText::_('COM_STM_FAST_USING_CRON'));
             $this->errorMessages[] = JText::_('COM_STM_FAST_USING_CRON');
         }
 
@@ -452,7 +477,9 @@ class STMController extends JControllerLegacy
         $message = str_replace('"', "'", $message);
 
         JLog::add($message, JLog::ERROR, 'jerror');
+
         $this->errorMessages[] = $message;
+        $this->logger->error($e->getMessage(), $message);
 
         return $saved;
     }

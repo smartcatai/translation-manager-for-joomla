@@ -63,6 +63,11 @@ class STMViewDashboard extends HtmlView
      */
     public function display($tpl = null)
     {
+        // Kostyli what i like
+        $input = JFactory::getApplication()->input->post;
+        $this->getModel()->setState('list.limit', $input->getInt('limit') ?? 20);
+        $this->getModel()->setState('list.start', $input->getInt('limitstart') ?? 0);
+
         $items = $this->get('Items');
         $pagination = $this->get('Pagination');
 
@@ -102,6 +107,7 @@ class STMViewDashboard extends HtmlView
         // Options button.
         if (Factory::getUser()->authorise('core.admin', 'com_st_manager')) {
             //JToolbarHelper::custom('cron.manual', 'checkin', 'checkin', 'Manual Cron Run', false);
+            JToolbarHelper::deleteList('Do you want delete selected projects?', 'dashboard.delete');
             JToolBarHelper::preferences('com_st_manager');
         }
     }

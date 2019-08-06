@@ -21,12 +21,14 @@ defined('_JEXEC') or die('Restricted access');
  * @package   Smartcat Translation Manager
  * @since    1.0
  */
-class STMViewProfiles extends HtmlView
+class STMViewEvents extends HtmlView
 {
     protected $helper;
     protected $items;
     protected $pagination;
+    protected $state;
     protected $sidebar = '';
+    public $filterForm;
 
     /**
      * STMViewProfiles constructor.
@@ -53,12 +55,19 @@ class STMViewProfiles extends HtmlView
      */
     public function display($tpl = null)
     {
-        $items = $this->get('Items');
-        $pagination = $this->get('Pagination');
+        // Kostyli what i like
+        $input = JFactory::getApplication()->input->post;
+        $this->getModel()->setState('list.limit', intval($input->get('list')[0]) ?? 20);
+        $this->getModel()->setState('list.start', $input->getInt('limitstart') ?? 0);
+
+        $this->items = $this->get('Items');
+        $this->state         = $this->get('State');
+        $this->total         = $this->get('Total');
+        $this->pagination = $this->get('Pagination');
+        $this->filterForm = $this->get('FilterForm');
 
         // Check for errors.
-        if (count($errors = $this->get('Errors')))
-        {
+        if (count($errors = $this->get('Errors'))) {
             throw new Exception(implode("\n", $errors), 500);
         }
 
@@ -66,11 +75,8 @@ class STMViewProfiles extends HtmlView
         $this->toolbar();
 
         // Show the sidebar
-        $this->helper->addSubmenus('profiles');
+        $this->helper->addSubmenus('events');
         $this->sidebar = JHtmlSidebar::render();
-
-        $this->items = $items;
-        $this->pagination = $pagination;
 
         // Display it all
         return parent::display($tpl);
@@ -85,47 +91,12 @@ class STMViewProfiles extends HtmlView
      */
     private function toolbar()
     {
-        JToolBarHelper::title(Text::_('COM_ST_MANAGER_PROFILES'), '');
+        JToolBarHelper::title(Text::_('COM_ST_MANAGER_EVENTS'), '');
 
         // Options button.
-        if (Factory::getUser()->authorise('core.admin', 'com_st_manager'))
-        {
+        if (Factory::getUser()->authorise('core.admin', 'com_st_manager')) {
             JToolBarHelper::preferences('com_st_manager');
-            JToolbarHelper::addNew('profile.add');
-            JToolbarHelper::editList('profile.edit');
-            JToolbarHelper::deleteList('Do you want delete selected profiles?', 'profiles.delete');
+            JToolbarHelper::deleteList('Do you want delete selected events?', 'events.delete');
         }
-    }
-
-    /**
-     * @param stdClass $item
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    protected function getTargetLanguages($item)
-    {
-        $items = array_map(function ($value) {
-            return LanguageDictionary::getNameByCode($value);
-        }, explode(',', $item->target_lang));
-
-        return implode(', ', $items);
-    }
-
-    /**
-     * @param stdClass $item
-     *
-     * @return string
-     *
-     * @since 1.0.0
-     */
-    protected function getWorkflowStages($item)
-    {
-        $items = array_map(function ($value) {
-            return ucfirst($value);
-        }, explode(',', $item->stages));
-
-        return implode(', ', $items);
     }
 }

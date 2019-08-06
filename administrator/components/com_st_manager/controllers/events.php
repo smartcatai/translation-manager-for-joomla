@@ -19,10 +19,9 @@ defined('_JEXEC') or die('Restricted access');
  * @package  Smartcat Translation Manager
  * @since    1.0
  */
-class STMControllerProfiles extends AdminController
+class STMControllerEvents extends AdminController
 {
     protected $option = 'com_st_manager';
-
     /**
      * Proxy for getModel.
      *
@@ -34,7 +33,7 @@ class STMControllerProfiles extends AdminController
      *
      * @since   1.6
      */
-    public function getModel($name = 'Profile', $prefix = 'STMModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Event', $prefix = 'STMModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
 
