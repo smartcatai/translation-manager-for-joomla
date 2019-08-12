@@ -24,7 +24,7 @@ defined('_JEXEC') or die('Restricted access');
             <?php echo $item->created_at; ?>
         </td>
         <td class="center">
-            <?php echo $item->type; ?>
+            <?php echo ucfirst($item->type); ?>
         </td>
         <td class="center">
             <?php echo $item->short_message; ?>

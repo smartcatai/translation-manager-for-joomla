@@ -94,7 +94,7 @@ class STMViewErrors extends HtmlView
         // Options button.
         if (Factory::getUser()->authorise('core.admin', 'com_st_manager')) {
             JToolBarHelper::preferences('com_st_manager');
-            JToolbarHelper::deleteList('Do you want delete selected errors?', 'errors.delete');
+            JToolbarHelper::deleteList(Text::_('COM_STM_DELETE_ERRORS_MSG'), 'errors.delete');
         }
     }
 }

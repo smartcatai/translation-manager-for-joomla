@@ -114,4 +114,24 @@ class STMModelProjects extends ListModel
 
         return $db->loadObjectList();
     }
+
+    /**
+     * @param string|array $status
+     * @return mixed
+     */
+    public function getByProfile($profileId)
+    {
+        $db = JFactory::getDbo();
+
+        if(intval($profileId) == 0) {
+            return false;
+        }
+
+        $query = $this->getListQuery()
+            ->where($db->quoteName('profile_id') . " = " . intval($profileId));
+
+        $db->setQuery($query);
+
+        return $db->loadObjectList();
+    }
 }

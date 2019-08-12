@@ -107,7 +107,7 @@ class STMViewDashboard extends HtmlView
         // Options button.
         if (Factory::getUser()->authorise('core.admin', 'com_st_manager')) {
             //JToolbarHelper::custom('cron.manual', 'checkin', 'checkin', 'Manual Cron Run', false);
-            JToolbarHelper::deleteList('Do you want delete selected projects?', 'dashboard.delete');
+            JToolbarHelper::deleteList(Text::_('COM_STM_DELETE_PROJECTS_MSG'), 'dashboard.delete');
             JToolBarHelper::preferences('com_st_manager');
         }
     }

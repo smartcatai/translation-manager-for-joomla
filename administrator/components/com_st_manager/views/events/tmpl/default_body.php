@@ -26,7 +26,7 @@ require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/LanguageDictionary.php';
             <?php echo $item->created_at; ?>
         </td>
         <td class="center">
-            <?php echo $item->type; ?>
+            <?php echo ucfirst($item->type); ?>
         </td>
         <td class="center">
             <?php echo $item->message; ?>

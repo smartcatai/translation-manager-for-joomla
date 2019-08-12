@@ -93,7 +93,7 @@ class STMViewProfiles extends HtmlView
             JToolBarHelper::preferences('com_st_manager');
             JToolbarHelper::addNew('profile.add');
             JToolbarHelper::editList('profile.edit');
-            JToolbarHelper::deleteList('Do you want delete selected profiles?', 'profiles.delete');
+            JToolbarHelper::deleteList(Text::_('COM_STM_DELETE_PROFILES_MSG'), 'profiles.delete');
         }
     }
 

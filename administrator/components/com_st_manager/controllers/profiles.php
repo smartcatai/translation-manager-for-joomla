@@ -40,4 +40,30 @@ class STMControllerProfiles extends AdminController
 
         return $model;
     }
+
+    public function delete()
+    {
+        $cid = $this->input->get('cid', array(), 'array');
+
+        /** @var STMModelProjects $model */
+        $model = self::getModel('Projects');
+
+        foreach ($cid as $id) {
+            $projects = $model->getByProfile(intval($id));
+
+            $pks = [];
+
+            foreach ($projects as $project) {
+                $pks[] = $project->id;
+            }
+
+            if (!empty($pks)) {
+                /** @var STMModelProject $projectModel */
+                $projectModel = self::getModel('Project');
+                $projectModel->delete($pks);
+            }
+        }
+
+        parent::delete();
+    }
 }

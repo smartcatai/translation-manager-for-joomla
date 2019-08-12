@@ -136,8 +136,8 @@ class STMController extends JControllerLegacy
             $this->projectModel->save($data);
         }
 
-        $this->logger->event('check', sprintf("Sended %d projects", count($scDocuments)));
-        $this->successMessages[] = sprintf("Sended %d projects", count($scDocuments));
+        $this->logger->event('check', sprintf("Sended projects: %d", count($scDocuments)));
+        $this->successMessages[] = sprintf("Sended projects: %d", count($scDocuments));
     }
 
     /**
@@ -184,8 +184,8 @@ class STMController extends JControllerLegacy
             }
         }
 
-        $this->logger->event('check', sprintf("Updated %d projects", count($updatedProjects)));
-        $this->successMessages[] = sprintf("Updated %d projects", count($updatedProjects));
+        $this->logger->event('check', sprintf("Updated projects: %d", count($updatedProjects)));
+        $this->successMessages[] = sprintf("Updated projects: %d", count($updatedProjects));
     }
 
     /**
@@ -227,8 +227,8 @@ class STMController extends JControllerLegacy
             $requestedProjects[] = $project;
         }
 
-        $this->logger->event('request', sprintf("Requested %d projects", count($requestedProjects)));
-        $this->successMessages[] = sprintf("Requested %d projects", count($requestedProjects));
+        $this->logger->event('request', sprintf("Requested projects: %d", count($requestedProjects)));
+        $this->successMessages[] = sprintf("Requested projects: %d", count($requestedProjects));
     }
 
     /**
@@ -316,8 +316,8 @@ class STMController extends JControllerLegacy
             }
         }
 
-        $this->logger->event('recieve', sprintf("Received %d projects", count($documentsDownloadSuccess)));
-        $this->successMessages[] = sprintf("Received %d projects", count($documentsDownloadSuccess));
+        $this->logger->event('recieve', sprintf("Received projects: %d", count($documentsDownloadSuccess)));
+        $this->successMessages[] = sprintf("Received projects: %d", count($documentsDownloadSuccess));
     }
 
     /**
@@ -414,7 +414,7 @@ class STMController extends JControllerLegacy
                 $this->errorMessages[] = JText::_('COM_STM_INCORRECT_CREDENTIALS');
             }
         } else {
-            $this->logger->error('Cron fast use', JText::_('COM_STM_FAST_USING_CRON'));
+            $this->logger->error('Cron start minimal interval exceeded', JText::_('COM_STM_FAST_USING_CRON'));
             $this->errorMessages[] = JText::_('COM_STM_FAST_USING_CRON');
         }
 
