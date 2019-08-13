@@ -1,21 +1,40 @@
 <?php
 /**
- * @package    src
+ * @package    Smartcat Translation Manager
  *
- * @author     medic84 <medic84@example.com>
- * @copyright  (c) 2019 medic84. All Rights Reserved.
+ * @author     Smartcat <support@smartcat.ai>
+ * @copyright  (c) 2019 Smartcat. All Rights Reserved.
  * @license    GNU General Public License version 3 or later; see LICENSE.txt
- * @link       http://medic84.example.com
+ * @link       http://smartcat.ai
  */
+
+// no direct access
+defined('_JEXEC') or die('Restricted access');
 
 class LoggerHelper
 {
+    private $isEventsEnabled;
+
+    /**
+     * LoggerHelper constructor.
+     */
     public function __construct()
     {
         JModelLegacy::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/models', 'STMModel');
+        $this->isEventsEnabled = JComponentHelper::getParams('com_st_manager')->get('enable_events_log');
     }
 
-    private function addErrorRecord($type, $shortMessage, $message) {
+    /**
+     * @param $type
+     * @param $shortMessage
+     * @param $message
+     *
+     * @return bool
+     *
+     * @since 1.0.0
+     */
+    private function addErrorRecord($type, $shortMessage, $message)
+    {
         /** @var STMModelError $model */
         $model = JModelLegacy::getInstance('Error', 'STMModel', array('ignore_request' => true));
         $errorData = [
@@ -24,10 +43,23 @@ class LoggerHelper
             'message' => $message
         ];
 
-        $model->save($errorData);
+        return $model->save($errorData);
     }
 
-    public function event($type, $message) {
+    /**
+     * @param $type
+     * @param $message
+     *
+     * @return bool
+     *
+     * @since 1.0.0
+     */
+    public function event($type, $message)
+    {
+        if (!$this->isEventsEnabled) {
+            return false;
+        }
+
         /** @var STMModelEvent $model */
         $model = JModelLegacy::getInstance('Event', 'STMModel', array('ignore_request' => true));
         $eventData = [
@@ -35,22 +67,54 @@ class LoggerHelper
             'message' => $message
         ];
 
-        $model->save($eventData);
+        return $model->save($eventData);
     }
 
-    public function error($shortMessage, $message) {
-        $this->addErrorRecord('error', $shortMessage, $message);
+    /**
+     * @param $shortMessage
+     * @param $message
+     *
+     *
+     * @since 1.0.0
+     */
+    public function error($shortMessage, $message)
+    {
+        return $this->addErrorRecord('error', $shortMessage, $message);
     }
 
-    public function warning($shortMessage, $message) {
-        $this->addErrorRecord('warning', $shortMessage, $message);
+    /**
+     * @param $shortMessage
+     * @param $message
+     *
+     *
+     * @since 1.0.0
+     */
+    public function warning($shortMessage, $message)
+    {
+        return $this->addErrorRecord('warning', $shortMessage, $message);
     }
 
-    public function info($shortMessage, $message) {
-        $this->addErrorRecord('info', $shortMessage, $message);
+    /**
+     * @param $shortMessage
+     * @param $message
+     *
+     *
+     * @since 1.0.0
+     */
+    public function info($shortMessage, $message)
+    {
+        return $this->addErrorRecord('info', $shortMessage, $message);
     }
 
-    public function debug($shortMessage, $message) {
-        $this->addErrorRecord('debug', $shortMessage, $message);
+    /**
+     * @param $shortMessage
+     * @param $message
+     *
+     *
+     * @since 1.0.0
+     */
+    public function debug($shortMessage, $message)
+    {
+        return $this->addErrorRecord('debug', $shortMessage, $message);
     }
 }

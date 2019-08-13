@@ -136,8 +136,8 @@ class STMController extends JControllerLegacy
             $this->projectModel->save($data);
         }
 
-        $this->logger->event('check', sprintf("Sended projects: %d", count($scDocuments)));
-        $this->successMessages[] = sprintf("Sended projects: %d", count($scDocuments));
+        $this->logger->event('check', sprintf("Sent projects: %d", count($scDocuments)));
+        $this->successMessages[] = sprintf("Sent projects: %d", count($scDocuments));
     }
 
     /**
