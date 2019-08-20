@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS `#__st_manager_profiles`;
 DROP TABLE IF EXISTS `#__st_manager_projects`;
 DROP TABLE IF EXISTS `#__st_manager_lock_keys`;
+DROP TABLE IF EXISTS `#__st_manager_errors`;
+DROP TABLE IF EXISTS `#__st_manager_events`;
 
 CREATE TABLE `#__st_manager_profiles` (
     `id`                int(11)         NOT NULL    auto_increment comment 'Profile ID',

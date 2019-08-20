@@ -38,6 +38,18 @@
 				hint="COM_SMARTCAT_API_TOKEN_HINT"
 				required="true"
 		/>
+		<field
+				name="enable_events_log"
+				type="radio"
+				label="COM_SMARTCAT_ENABLE_EVENT_LOGS_LABEL"
+				description="COM_SMARTCAT_ENABLE_EVENT_LOGS_DESCRIPTION"
+				hint="COM_SMARTCAT_ENABLE_EVENT_LOGS_HINT"
+				class="btn-group btn-group-yesno"
+				default="0"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 		<field type="spacer" />
 		<field
 				name="note"

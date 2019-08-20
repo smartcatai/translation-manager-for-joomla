@@ -11,6 +11,8 @@
 // no direct access
 defined('_JEXEC') or die('Restricted access');
 
+JHtml::_('formbehavior.chosen', 'select');
+
 ?>
 <div id="j-sidebar-container" class="span2">
     <?php echo $this->sidebar; ?>

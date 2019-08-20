@@ -19,10 +19,9 @@ defined('_JEXEC') or die('Restricted access');
  * @package  Smartcat Translation Manager
  * @since    1.0
  */
-class STMControllerProfiles extends AdminController
+class STMControllerErrors extends AdminController
 {
     protected $option = 'com_st_manager';
-
     /**
      * Proxy for getModel.
      *
@@ -34,36 +33,10 @@ class STMControllerProfiles extends AdminController
      *
      * @since   1.6
      */
-    public function getModel($name = 'Profile', $prefix = 'STMModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Error', $prefix = 'STMModel', $config = array('ignore_request' => true))
     {
         $model = parent::getModel($name, $prefix, $config);
 
         return $model;
-    }
-
-    public function delete()
-    {
-        $cid = $this->input->get('cid', array(), 'array');
-
-        /** @var STMModelProjects $model */
-        $model = self::getModel('Projects');
-
-        foreach ($cid as $id) {
-            $projects = $model->getByProfile(intval($id));
-
-            $pks = [];
-
-            foreach ($projects as $project) {
-                $pks[] = $project->id;
-            }
-
-            if (!empty($pks)) {
-                /** @var STMModelProject $projectModel */
-                $projectModel = self::getModel('Project');
-                $projectModel->delete($pks);
-            }
-        }
-
-        parent::delete();
     }
 }
