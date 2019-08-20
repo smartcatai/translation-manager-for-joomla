@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS `#__st_manager_errors`;
+DROP TABLE IF EXISTS `#__st_manager_events`;
+
 CREATE TABLE `#__st_manager_errors` (
     `id`            int(11)         NOT NULL     auto_increment comment 'Error ID',
     `type`          varchar(50)     NOT NULL     comment 'Error type',
