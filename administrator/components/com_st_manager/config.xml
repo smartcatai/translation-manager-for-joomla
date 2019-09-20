@@ -50,6 +50,18 @@
 			<option value="1">JYES</option>
 			<option value="0">JNO</option>
 		</field>
+		<field
+				name="enable_external_cron"
+				type="radio"
+				label="COM_SMARTCAT_ENABLE_EXTERNAL_CRON_LABEL"
+				description="COM_SMARTCAT_ENABLE_EXTERNAL_CRON_DESCRIPTION"
+				hint="COM_SMARTCAT_ENABLE_EXTERNAL_CRON_HINT"
+				class="btn-group btn-group-yesno"
+				default="0"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
 		<field type="spacer" />
 		<field
 				name="note"
