@@ -23,7 +23,8 @@ use Http\Message\MessageFactory\GuzzleMessageFactory;
  *
  * @package SmartCAT\WP\Helpers
  */
-class CronHelper implements PluginInterface {
+class CronHelper
+{
     /**
      * @var string
      */
@@ -31,27 +32,27 @@ class CronHelper implements PluginInterface {
     /**
      * @var FlexibleHttpClient
      */
-    private $http_client;
+    private $httpClient;
     /**
      * @var GuzzleMessageFactory
      */
-    private $message_factory;
+    private $messageFactory;
 
     /**
      * CronHelper constructor.
      */
     public function __construct()
     {
-        $this->message_factory = new GuzzleMessageFactory();
+        $this->messageFactory = new GuzzleMessageFactory();
         $options               = [
             'remote_socket' => "tcp://{$this->host}:443",
             'ssl'           => true,
         ];
 
-        $socket_client = new SocketHttpClient($this->message_factory, $options);
-        $client = new PluginClient($socket_client, [new ErrorPlugin(), new ContentLengthPlugin()]);
+        $socketClient = new SocketHttpClient($this->messageFactory, $options);
+        $client = new PluginClient($socketClient, [new ErrorPlugin(), new ContentLengthPlugin()]);
 
-        $this->http_client = new FlexibleHttpClient($client);
+        $this->httpClient = new FlexibleHttpClient($client);
     }
 
     /**
@@ -61,7 +62,7 @@ class CronHelper implements PluginInterface {
      *
      * @return \Psr\Http\Message\ResponseInterface
      */
-    public function subscribe( $account, $token, $url )
+    public function subscribe($account, $token, $url)
     {
         $data = array(
             'account' => $account,
@@ -70,7 +71,7 @@ class CronHelper implements PluginInterface {
         );
 
         $request  = $this->createRequest("https://{$this->host}/api/subscription", $data);
-        $response = $this->http_client->sendRequest($request);
+        $response = $this->httpClient->sendRequest($request);
 
         return $response;
     }
@@ -89,7 +90,7 @@ class CronHelper implements PluginInterface {
         );
 
         $request  = $this->createRequest("https://{$this->host}/api/subscription", $data, 'DELETE');
-        $response = $this->http_client->sendRequest($request);
+        $response = $this->httpClient->sendRequest($request);
 
         return $response;
     }
@@ -106,6 +107,6 @@ class CronHelper implements PluginInterface {
         $headers = array_merge(array('Accept' => array('application/json')));
         $body = json_encode($data);
 
-        return $this->message_factory->createRequest($method, $url, $headers, $body);
+        return $this->messageFactory->createRequest($method, $url, $headers, $body);
     }
 }

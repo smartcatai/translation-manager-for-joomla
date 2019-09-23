@@ -83,22 +83,23 @@ class PlgExtensionStm_Check_Login extends JPlugin
         return true;
     }
 
-    private function cronHanler($params) {
+    private function cronHanler($params)
+    {
         require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/CronHelper.php';
 
         $previousLogin = JComponentHelper::getParams('com_st_manager')->get('application_id');
         $externalCron = JComponentHelper::getParams('com_st_manager')->get('enable_external_cron');
         $cronHelper = new CronHelper();
-        $authorisation_token = base64_encode( openssl_random_pseudo_bytes( 32 ) );
-        $url = JRoute::_('index.php?option=com_st_manager&task=cron', false);
+        $authorisation_token = base64_encode(openssl_random_pseudo_bytes(32));
+        $url = JRoute::_(JURI::root() . 'index.php?option=com_st_manager&task=cron');
 
         if (!(boolval($params['enable_external_cron']) && boolval($externalCron))) {
-            if ($previousLogin) {
+            if ($previousLogin && boolval($externalCron)) {
                 $cronHelper->unsubscribe($previousLogin, $url);
             }
 
             if (boolval($params['enable_external_cron'])) {
-                $cronHelper->subscribe($params['api_token'], $authorisation_token, $url);
+                $cronHelper->subscribe($params['application_id'], $authorisation_token, $url);
             }
         }
     }
