@@ -47,6 +47,7 @@ class CronHelper
         $options               = [
             'remote_socket' => "tcp://{$this->host}:443",
             'ssl'           => true,
+            'ssl_method'    => STREAM_CRYPTO_METHOD_SSLv23_CLIENT,
         ];
 
         $socketClient = new SocketHttpClient($this->messageFactory, $options);
