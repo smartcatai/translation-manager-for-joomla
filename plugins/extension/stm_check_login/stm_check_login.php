@@ -74,11 +74,10 @@ class PlgExtensionStm_Check_Login extends JPlugin
             $sc->getAccountManager()->accountGetAccountInfo();
             $params['api_token'] = SCHelper::encryptToken($params['api_token']);
             $table->params = json_encode($params);
+            $this->cronHanler($params);
         } catch (\Throwable $e) {
             throw new RuntimeException(JText::_('PLG_STM_INCORRECT_CREDENTIALS'));
         }
-
-        $this->cronHanler($params);
 
         return true;
     }
@@ -89,11 +88,12 @@ class PlgExtensionStm_Check_Login extends JPlugin
 
         $previousLogin = JComponentHelper::getParams('com_st_manager')->get('application_id');
         $externalCron = JComponentHelper::getParams('com_st_manager')->get('enable_external_cron');
-        $cronHelper = new CronHelper();
-        $authorisation_token = base64_encode(openssl_random_pseudo_bytes(32));
-        $url = JRoute::_(JURI::root() . 'index.php?option=com_st_manager&task=cron');
 
         if (!(boolval($params['enable_external_cron']) && boolval($externalCron))) {
+            $cronHelper = new CronHelper();
+            $authorisation_token = base64_encode(openssl_random_pseudo_bytes(32));
+            $url = JRoute::_(JURI::root() . 'index.php?option=com_st_manager&task=cron');
+
             if ($previousLogin && boolval($externalCron)) {
                 $cronHelper->unsubscribe($previousLogin, $url);
             }
