@@ -69,5 +69,6 @@
 				label="COM_SMARTCAT_AUTH_NOTE_NAME"
 				description="COM_SMARTCAT_AUTH_NOTE_DESCRIPTION"
 		/>
+        <field name="last_cron_start" type="hidden"/>
 	</fieldset>
 </config>

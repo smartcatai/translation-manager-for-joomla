@@ -110,4 +110,46 @@ class CronHelper
 
         return $this->messageFactory->createRequest($method, $url, $headers, $body);
     }
+
+    /**
+     * @param $nowCronState
+     * @param $previousCronState
+     * @param $nowLogin
+     * @param $previousLogin
+     * @param $url
+     * @param null $authorizationToken
+     * @return bool|null
+     */
+    public static function process($nowCronState, $previousCronState, $nowLogin, $previousLogin, $url, $authorizationToken = null)
+    {
+        if (!$authorizationToken) {
+            $authorizationToken = base64_encode(openssl_random_pseudo_bytes(32));
+        }
+
+        $cronHelper = new self();
+
+        // if state of external cron was changed
+        if (!(boolval($nowCronState) && boolval($previousCronState))) {
+            // if previous state was enabled - deactivate
+            if ($previousLogin && boolval($previousCronState)) {
+                $cronHelper->unsubscribe($previousLogin, $url);
+                return false;
+            }
+
+            // if now state was enabled - activate
+            if (boolval($nowCronState)) {
+                $cronHelper->subscribe($nowLogin, $authorizationToken, $url);
+                return true;
+            }
+        } else {
+            // if Smartcat account id was changed when external cron is enabled, need to subscribe from new account
+            if (($previousLogin !== $nowLogin) && boolval($nowCronState)) {
+                $cronHelper->unsubscribe($previousLogin, $url);
+                $cronHelper->subscribe($nowLogin, $authorizationToken, $url);
+                return true;
+            }
+        }
+
+        return null;
+    }
 }
