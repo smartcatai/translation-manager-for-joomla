@@ -85,13 +85,22 @@ class PlgExtensionStm_Check_Login extends JPlugin
     private function cronHanler($params)
     {
         require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/CronHelper.php';
+        require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/LoggerHelper.php';
 
-        CronHelper::process(
+        $cronState = CronHelper::process(
             $params['enable_external_cron'],
             JComponentHelper::getParams('com_st_manager')->get('enable_external_cron'),
             $params['application_id'],
             JComponentHelper::getParams('com_st_manager')->get('application_id'),
             JRoute::_(JURI::root() . 'index.php?option=com_st_manager&task=cron')
         );
+
+        $logger = new LoggerHelper();
+
+        if ($cronState === true) {
+            $logger->event('External cron', 'External cron successfully activated');
+        } elseif ($cronState === false) {
+            $logger->event('External cron', 'External cron successfully de-activated');
+        }
     }
 }
