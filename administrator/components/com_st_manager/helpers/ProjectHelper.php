@@ -11,6 +11,7 @@
 use SmartCat\Client\Model\BilingualFileImportSettingsModel;
 use SmartCat\Client\Model\CreateDocumentPropertyWithFilesModel;
 use SmartCat\Client\Model\CreateProjectModel;
+use SmartCat\Client\Model\DocumentModel;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
@@ -102,12 +103,43 @@ class ProjectHelper
         return $documentModel;
     }
 
+    /**
+     * @param CreateDocumentPropertyWithFilesModel[] $documents
+     * @param string $externalProjectId
+     *
+     * @return DocumentModel[]
+     *
+     * @since version
+     */
     public function sendDocuments($documents, $externalProjectId)
     {
-        return $this->api->getProjectManager()->projectAddDocument([
-            'documentModel' => $documents,
-            'projectId' => $externalProjectId,
-        ]);
+        $resDocuments = [];
+        $project = $this->api->getProjectManager()->projectGet($externalProjectId);
+
+        $scDocuments = array_map(
+            function (DocumentModel $value) {
+                return $value->getName() . '.json';
+            },
+            $project->getDocuments()
+        );
+
+        foreach ($documents as $document) {
+            $index = array_search($document->getFile()['fileName'], $scDocuments, true);
+
+            if (false !== $index) {
+                $resDocuments[] = $this->api->getDocumentManager()->documentUpdate([
+                    'documentId'   => $scDocuments[$index]->getId(),
+                    'uploadedFile' => $document->getFile(),
+                ]);
+            } else {
+                $resDocuments[] = $this->api->getProjectManager()->projectAddDocument([
+                    'documentModel' => [$document],
+                    'projectId' => $externalProjectId,
+                ]);
+            }
+        }
+
+        return $resDocuments;
     }
 
 

@@ -74,9 +74,14 @@ class PlgExtensionStm_Check_Login extends JPlugin
             $sc->getAccountManager()->accountGetAccountInfo();
             $params['api_token'] = SCHelper::encryptToken($params['api_token']);
             $table->params = json_encode($params);
-            $this->cronHanler($params);
         } catch (\Throwable $e) {
             throw new RuntimeException(JText::_('PLG_STM_INCORRECT_CREDENTIALS'));
+        }
+
+        try {
+            $this->cronHanler($params);
+        } catch (\Throwable $e) {
+            throw new RuntimeException($e->getMessage());
         }
 
         return true;
@@ -85,7 +90,6 @@ class PlgExtensionStm_Check_Login extends JPlugin
     private function cronHanler($params)
     {
         require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/CronHelper.php';
-        require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/LoggerHelper.php';
 
         $cronState = CronHelper::process(
             $params['enable_external_cron'],
@@ -95,12 +99,24 @@ class PlgExtensionStm_Check_Login extends JPlugin
             JRoute::_(JURI::root() . 'index.php?option=com_st_manager&task=cron')
         );
 
-        $logger = new LoggerHelper();
-
         if ($cronState === true) {
-            $logger->event('External cron', 'External cron successfully activated');
+            $this->logEvent('External cron', 'External cron successfully activated');
         } elseif ($cronState === false) {
-            $logger->event('External cron', 'External cron successfully de-activated');
+            $this->logEvent('External cron', 'External cron successfully de-activated');
         }
+    }
+
+    private function logEvent($type, $message)
+    {
+        JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_st_manager' . DIRECTORY_SEPARATOR . 'models', 'STMModel');
+        /** @var STMModelEvent $model */
+        $model = JModelLegacy::getInstance('Event', 'STMModel', array('ignore_request' => false));
+
+        $eventData = [
+            'type' => $type,
+            'message' => $message
+        ];
+
+        return $model->save($eventData);
     }
 }
