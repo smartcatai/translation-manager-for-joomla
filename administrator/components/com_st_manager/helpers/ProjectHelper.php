@@ -127,16 +127,18 @@ class ProjectHelper
             $index = array_search($document->getFile()['fileName'], $scDocuments, true);
 
             if (false !== $index) {
-                $resDocuments[] = $this->api->getDocumentManager()->documentUpdate([
+                $scDocument = $this->api->getDocumentManager()->documentUpdate([
                     'documentId'   => $scDocuments[$index]->getId(),
                     'uploadedFile' => $document->getFile(),
                 ]);
             } else {
-                $resDocuments[] = $this->api->getProjectManager()->projectAddDocument([
+                $scDocument = $this->api->getProjectManager()->projectAddDocument([
                     'documentModel' => [$document],
                     'projectId' => $externalProjectId,
                 ]);
             }
+
+            $resDocuments[] = array_shift($scDocument);
         }
 
         return $resDocuments;
