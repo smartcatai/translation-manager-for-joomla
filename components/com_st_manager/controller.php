@@ -147,7 +147,7 @@ class STMController extends JControllerLegacy
                 'status' => $scDocument->getStatus(),
                 'document_id' => $scDocument->getId(),
                 'task_id' => null,
-                'target_lang' => $scDocument->getTargetLanguage(),
+                'target_lang' => LanguageDictionary::codeConvertToJoomla($scDocument->getTargetLanguage()),
             ];
 
             $this->projectModel->save($data);
