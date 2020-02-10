@@ -7,7 +7,7 @@
 	<authorUrl>https://smartcat.ai</authorUrl>
 	<copyright>Copyright</copyright>
 	<license>GNU General Public License version 3 or later; see LICENSE.txt</license>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<description>COM_ST_MANAGER_XML_DESCRIPTION</description>
 
 	<!-- Scripts to run on installation -->
@@ -46,6 +46,8 @@
 			<menu link="option=com_st_manager&amp;view=dashboard">COM_ST_MANAGER_DASHBOARD</menu>
 			<menu link="option=com_st_manager&amp;view=profiles">COM_ST_MANAGER_PROFILES</menu>
 			<menu link="option=com_config&amp;view=component&amp;component=com_st_manager">COM_ST_MANAGER_OPTIONS</menu>
+			<menu link="option=com_st_manager&amp;view=errors">COM_ST_MANAGER_ERRORS</menu>
+			<menu link="option=com_st_manager&amp;view=events">COM_ST_MANAGER_EVENTS</menu>
 		</submenu>
 
 		<!-- Core files -->

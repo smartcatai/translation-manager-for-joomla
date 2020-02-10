@@ -34,5 +34,7 @@ class STMHelper
 	{
         JHtmlSidebar::addEntry(Text::_('COM_ST_MANAGER_DASHBOARD'), 'index.php?option=com_st_manager&view=dashboard', $vName == 'dashboard');
 	    JHtmlSidebar::addEntry(Text::_('COM_ST_MANAGER_PROFILES'), 'index.php?option=com_st_manager&view=profiles', $vName == 'profiles');
+        JHtmlSidebar::addEntry(Text::_('COM_ST_MANAGER_ERRORS'), 'index.php?option=com_st_manager&view=errors', $vName == 'errors');
+        JHtmlSidebar::addEntry(Text::_('COM_ST_MANAGER_EVENTS'), 'index.php?option=com_st_manager&view=events', $vName == 'events');
 	}
 }

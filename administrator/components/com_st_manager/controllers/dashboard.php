@@ -49,10 +49,10 @@ class STMControllerDashboard extends AdminController
      *
      * @since   1.6
      */
-    public function getModel($name = 'Projects', $prefix = 'STMModel', $config = array('ignore_request' => true))
+    public function getModel($name = 'Project', $prefix = 'STMModel', $config = array('ignore_request' => true))
     {
         if ($name === 'dashboard') {
-            $name = 'projects';
+            $name = 'project';
         }
         $model = parent::getModel($name, $prefix, $config);
 
@@ -70,7 +70,7 @@ class STMControllerDashboard extends AdminController
         $redirect = $_SERVER['HTTP_REFERER'];
         $input = JFactory::getApplication()->input;
         $cid = $input->post->get('cid');
-        $profileId = $input->get->get('profile_id');
+        $profileId = $input->get->getInt('profile_id');
 
         if (empty($cid)) {
             $this->setRedirect($redirect, JText::_('COM_STM_ARTICLES_NOT_SELECTED_ERROR'), 'error');
@@ -100,7 +100,7 @@ class STMControllerDashboard extends AdminController
 
             foreach ($targetLangs as $targetLang) {
                 /** @var STMModelProject $model */
-                $model = parent::getModel('Project', 'STMModel', array('ignore_request' => true));
+                $model = $this->getModel();
 
                 $data = [
                     'entity_id' => $article->id,

@@ -17,6 +17,9 @@ include_once JPATH_COMPONENT_ADMINISTRATOR . '/models/project.php';
 <?php foreach ($this->items as $i => $item) :?>
     <tr class="row<?php echo $i % 2; ?>">
         <td class="center">
+            <?php echo JHtml::_('grid.id', $i, $item->id); ?>
+        </td>
+        <td class="center">
             <?php
                 $item_link = JRoute::_('index.php?option=com_content&task=article.edit&id=' . $item->entity_id, false);
             ?>
