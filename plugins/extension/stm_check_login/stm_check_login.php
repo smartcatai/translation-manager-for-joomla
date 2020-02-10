@@ -102,12 +102,6 @@ class PlgExtensionStm_Check_Login extends JPlugin
             JComponentHelper::getParams('com_st_manager')->get('application_id'),
             JRoute::_(JURI::root() . 'index.php?option=com_st_manager&task=cron')
         );
-
-        if ($cronState === true) {
-            $this->logEvent('External cron', 'External cron successfully activated');
-        } elseif ($cronState === false) {
-            $this->logEvent('External cron', 'External cron successfully de-activated');
-        }
     }
 
     private function logEvent($type, $message)

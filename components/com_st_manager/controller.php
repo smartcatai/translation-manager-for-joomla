@@ -88,6 +88,8 @@ class STMController extends JControllerLegacy
         }
 
         foreach ($projects as $index => $project) {
+            $project->source_lang = LanguageDictionary::getScCodeByCode($project->source_lang);
+            $project->target_lang = LanguageDictionary::getScCodeByCode($project->target_lang);
             $item = $this->articleModel->getItem($project->entity_id);
             $fields = [];
 

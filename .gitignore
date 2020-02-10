@@ -6,7 +6,7 @@
 /administrator/components/*
 /administrator/help/*
 /administrator/includes/*
-/administrator/language/en-GB/*
+/administrator/language/*
 /administrator/language/overrides/*
 /administrator/logs/*
 /administrator/manifests/files/*
@@ -22,7 +22,7 @@
 /images/*
 /installation/*
 /includes/*
-/language/en-GB/*
+/language/*
 /language/overrides/*
 /language/index.html
 /layouts/*

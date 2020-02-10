@@ -56,6 +56,12 @@ class ProjectHelper
                 ->setAssignToVendor(true)
                 ->setVendorAccountIds([$profile->vendor]);
         }
+        $profile->source_lang = LanguageDictionary::getScCodeByCode($profile->source_lang);
+        $targetLangsArray = [];
+        foreach (explode(",", $profile->target_lang) as $lang) {
+            array_push($targetLangsArray, LanguageDictionary::getScCodeByCode($lang));
+        }
+        $profile->target_lang = join(",", $targetLangsArray);
 
         $name = !empty($projectName) ? $projectName : $profile->name;
         $newScProject

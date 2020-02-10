@@ -49,14 +49,14 @@ class JFormFieldSTM_Language extends JFormFieldList
             $languages = JLanguage::getKnownLanguages();
             $joomlaCodes = array_keys($languages);
 
-            if (isset($languageList)) {
-                foreach ($languageList as $language) {
-                    $name = LanguageDictionary::getNameByCode($language->getId());
+            if (!empty($languageList) && !empty($joomlaCodes)) {
+                foreach ($joomlaCodes as $language) {
+                    $name = LanguageDictionary::getNameByCode($language);
 
                     if ($name) {
                         $languages = array_merge(
                             $languages,
-                            [$language->getId() => $name . ' - ' . $language->getId()]
+                            [$language => $name . ' - ' . $language]
                         );
                     }
                 }
