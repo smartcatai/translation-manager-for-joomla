@@ -10,8 +10,8 @@
     <packager>Smartcat</packager>
     <packagerurl>http://smartcat.ai</packagerurl>
     <license>GNU General Public License version 3 or later; see LICENSE.txt</license>
-    <version>1.0.1</version>
-    <description>Smartcat Translation Manager For Joomla 1.0.1</description>
+    <version>1.0.3</version>
+    <description>Smartcat Translation Manager For Joomla 1.0.3</description>
 
     <updateservers>
         <server type="package" name="">https://smartcatai.github.io/translation-manager-for-joomla/manifest.xml</server>

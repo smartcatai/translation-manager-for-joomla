@@ -28,7 +28,6 @@ class STMController extends JControllerLegacy
     private $projectHelper;
     private $scHelper;
     private $exportHelper;
-    private $locker;
 
     /** @var ContentModelArticle $articleModel */
     private $articleModel;
@@ -61,7 +60,6 @@ class STMController extends JControllerLegacy
         $this->projectHelper = ProjectHelper::getInstance();
         $this->scHelper = SCHelper::getInstance();
         $this->exportHelper = ExportTranslationHelper::getInstance();
-        $this->locker = new Factory(new PdoStore());
 
         $this->articleModel = parent::getModel('Article', 'ContentModel', array('ignore_request' => true));
         $this->profileModel = parent::getModel('Profile', 'STMModel', array('ignore_request' => true));
@@ -90,6 +88,8 @@ class STMController extends JControllerLegacy
         }
 
         foreach ($projects as $index => $project) {
+            $project->source_lang = LanguageDictionary::getScCodeByCode($project->source_lang);
+            $project->target_lang = LanguageDictionary::getScCodeByCode($project->target_lang);
             $item = $this->articleModel->getItem($project->entity_id);
             $fields = [];
 
@@ -427,11 +427,11 @@ class STMController extends JControllerLegacy
      */
     private function getResponse(callable $task)
     {
-        $lock = $this->locker->createLock('stm-cron-task', 30, false);
+        $params = JComponentHelper::getParams('com_st_manager');
 
-        $lock->acquire();
+        if (time() - intval($params->get('last_cron_start')) > 30) {
+            $this->updateLastCronStart();
 
-        if ($lock->isAcquired()) {
             if ($this->scHelper->checkAccess()) {
                 $task();
             } else {
@@ -507,5 +507,24 @@ class STMController extends JControllerLegacy
         $this->logger->error($e->getMessage(), $message);
 
         return $saved;
+    }
+
+    private function updateLastCronStart()
+    {
+        $component = JComponentHelper::getComponent('com_st_manager');
+        $params = $component->getParams();
+
+        $params->set('last_cron_start', time());
+
+        $table = JTable::getInstance('extension');
+        $table->load($component->id);
+        $table->bind(array('params' => $params->toString()));
+
+        // Save to database
+        if (!$table->check() || !$table->store()) {
+            return false;
+        }
+
+        return true;
     }
 }

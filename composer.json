@@ -1,7 +1,8 @@
 {
     "require": {
+        "ext-openssl": "*",
         "smartcat/smartcat-api": "^2.0",
-        "symfony/lock": "^4.3"
+        "symfony/options-resolver": "^3.4"
     },
     "config": {
         "vendor-dir": "libraries/smartcat_api"

@@ -11,6 +11,7 @@
 use SmartCat\Client\Model\BilingualFileImportSettingsModel;
 use SmartCat\Client\Model\CreateDocumentPropertyWithFilesModel;
 use SmartCat\Client\Model\CreateProjectModel;
+use SmartCat\Client\Model\DocumentModel;
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
@@ -55,6 +56,12 @@ class ProjectHelper
                 ->setAssignToVendor(true)
                 ->setVendorAccountIds([$profile->vendor]);
         }
+        $profile->source_lang = LanguageDictionary::getScCodeByCode($profile->source_lang);
+        $targetLangsArray = [];
+        foreach (explode(",", $profile->target_lang) as $lang) {
+            array_push($targetLangsArray, LanguageDictionary::getScCodeByCode($lang));
+        }
+        $profile->target_lang = join(",", $targetLangsArray);
 
         $name = !empty($projectName) ? $projectName : $profile->name;
         $newScProject
@@ -102,12 +109,45 @@ class ProjectHelper
         return $documentModel;
     }
 
+    /**
+     * @param CreateDocumentPropertyWithFilesModel[] $documents
+     * @param string $externalProjectId
+     *
+     * @return DocumentModel[]
+     *
+     * @since version
+     */
     public function sendDocuments($documents, $externalProjectId)
     {
-        return $this->api->getProjectManager()->projectAddDocument([
-            'documentModel' => $documents,
-            'projectId' => $externalProjectId,
-        ]);
+        $resDocuments = [];
+        $project = $this->api->getProjectManager()->projectGet($externalProjectId);
+
+        $scDocuments = array_map(
+            function (DocumentModel $value) {
+                return $value->getName() . '.json';
+            },
+            $project->getDocuments()
+        );
+
+        foreach ($documents as $document) {
+            $index = array_search($document->getFile()['fileName'], $scDocuments, true);
+
+            if (false !== $index) {
+                $scDocument = $this->api->getDocumentManager()->documentUpdate([
+                    'documentId'   => $scDocuments[$index]->getId(),
+                    'uploadedFile' => $document->getFile(),
+                ]);
+            } else {
+                $scDocument = $this->api->getProjectManager()->projectAddDocument([
+                    'documentModel' => [$document],
+                    'projectId' => $externalProjectId,
+                ]);
+            }
+
+            $resDocuments[] = array_shift($scDocument);
+        }
+
+        return $resDocuments;
     }
 
 

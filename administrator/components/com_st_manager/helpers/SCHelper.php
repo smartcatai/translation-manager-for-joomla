@@ -103,7 +103,7 @@ class SCHelper extends SmartCat
         } catch (\Throwable $e) {
             return $token_hash;
         }
-        return $decrypted;
+        return $decrypted ? $decrypted : $token_hash;
     }
     /**
      * @param $token

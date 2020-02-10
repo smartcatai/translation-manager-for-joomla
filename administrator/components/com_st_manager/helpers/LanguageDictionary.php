@@ -19,171 +19,79 @@ class LanguageDictionary
     private static function getLanguages()
     {
         return [
-            ['name' => 'Abkhaz', 'code' => 'ab'],
-            ['name' => 'Afar', 'code' => 'aa'],
-            ['name' => 'Afrikaans', 'code' => 'af'],
-            ['name' => 'Akan', 'code' => 'ak'],
-            ['name' => 'Albanian', 'code' => 'sq'],
-            ['name' => 'Amharic', 'code' => 'am'],
-            ['name' => 'Arabic', 'code' => 'ar'],
-            ['name' => 'Armenian (Eastern)', 'code' => 'hy-arevela'],
-            ['name' => 'Armenian (Western)', 'code' => 'hy-arevmda'],
-            ['name' => 'Armenian', 'code' => 'hy'],
-            ['name' => 'Assamese', 'code' => 'as'],
-            ['name' => 'Avar', 'code' => 'av'],
-            ['name' => 'Azeri (Cyrillic)', 'code' => 'az-Cyrl'],
-            ['name' => 'Azeri (Latin)', 'code' => 'az-Latn'],
-            ['name' => 'Balochi (southern)', 'code' => 'bcc'],
-            ['name' => 'Bambara', 'code' => 'bm'],
-            ['name' => 'Bashkir', 'code' => 'ba'],
-            ['name' => 'Basque', 'code' => 'eu'],
-            ['name' => 'Belarusian', 'code' => 'be'],
-            ['name' => 'Bengali', 'code' => 'bn'],
-            ['name' => 'Bihari', 'code' => 'bh'],
-            ['name' => 'Bosnian', 'code' => 'bs'],
-            ['name' => 'Bulgarian', 'code' => 'bg'],
-            ['name' => 'Burmese', 'code' => 'my'],
-            ['name' => 'Catalan', 'code' => 'ca'],
-            ['name' => 'Chechen', 'code' => 'ce'],
-            ['name' => 'Chinese (Cantonese)', 'code' => 'yue'],
-            ['name' => 'Chinese (Hong Kong SAR)', 'code' => 'zh-Hant-HK'],
-            ['name' => 'Chinese (Macau SAR)', 'code' => 'zh-Hant-MO'],
-            ['name' => 'Chinese (Malaysia)', 'code' => 'zh-Hans-MY'],
-            ['name' => 'Chinese (PRC)', 'code' => 'zh-Hans'],
-            ['name' => 'Chinese (Singapore)', 'code' => 'zh-Hans-SG'],
-            ['name' => 'Chinese (Taiwan)', 'code' => 'zh-Hant-TW'],
-            ['name' => 'Chuvash', 'code' => 'cv'],
-            ['name' => 'Cornish', 'code' => 'kw'],
-            ['name' => 'Croatian', 'code' => 'hr'],
-            ['name' => 'Czech', 'code' => 'cs'],
-            ['name' => 'Danish', 'code' => 'da'],
-            ['name' => 'Dutch', 'code' => 'nl'],
-            ['name' => 'English (Australia)', 'code' => 'en-AU'],
-            ['name' => 'English (USA)', 'code' => 'en-US'],
-            ['name' => 'English (United Kindom)', 'code' => 'en-GB'],
-            ['name' => 'English', 'code' => 'en'],
-            ['name' => 'Esperanto', 'code' => 'eo'],
-            ['name' => 'Estonian', 'code' => 'et'],
-            ['name' => 'Farsi', 'code' => 'fa'],
-            ['name' => 'Filipino', 'code' => 'fil'],
-            ['name' => 'Finnish', 'code' => 'fi'],
-            ['name' => 'French (Canada)', 'code' => 'fr-CA'],
-            ['name' => 'French (France)', 'code' => 'fr-FR'],
-            ['name' => 'French', 'code' => 'fr'],
-            ['name' => 'Fulah', 'code' => 'ff'],
-            ['name' => 'Galician', 'code' => 'gl'],
-            ['name' => 'Georgian', 'code' => 'ka'],
-            ['name' => 'German (Austria)', 'code' => 'de-AT'],
-            ['name' => 'German (Germany)', 'code' => 'de-DE'],
-            ['name' => 'German (Switzerland)', 'code' => 'de-CH'],
-            ['name' => 'German', 'code' => 'de'],
-            ['name' => 'Greek', 'code' => 'el'],
-            ['name' => 'Guarani', 'code' => 'gn'],
-            ['name' => 'Gujarati', 'code' => 'gu'],
-            ['name' => 'Haitian Creole', 'code' => 'ht'],
-            ['name' => 'Hausa (Latin)', 'code' => 'ha-Latn'],
-            ['name' => 'Hazaragi', 'code' => 'haz'],
-            ['name' => 'Hebrew', 'code' => 'he'],
-            ['name' => 'Hindi', 'code' => 'hi'],
-            ['name' => 'Hmong', 'code' => 'hmn'],
-            ['name' => 'Hungarian', 'code' => 'hu'],
-            ['name' => 'Icelandic', 'code' => 'is'],
-            ['name' => 'Indonesian', 'code' => 'id'],
-            ['name' => 'Irish', 'code' => 'ga'],
-            ['name' => 'Italian', 'code' => 'it'],
-            ['name' => 'Japanese', 'code' => 'ja'],
-            ['name' => 'Javanese', 'code' => 'jv'],
-            ['name' => 'Kabyle', 'code' => 'kab'],
-            ['name' => 'Kannada', 'code' => 'kn'],
-            ['name' => 'Kazakh', 'code' => 'kk'],
-            ['name' => 'Khmer', 'code' => 'km'],
-            ['name' => 'Kinyarwanda', 'code' => 'rw'],
-            ['name' => 'Komi', 'code' => 'kv'],
-            ['name' => 'Korean', 'code' => 'ko'],
-            ['name' => 'Kurdish (Kurmandji)', 'code' => 'kmr-Latn'],
-            ['name' => 'Kurdish (Palewani)', 'code' => 'sdh-Arab'],
-            ['name' => 'Kurdish (Sorani)', 'code' => 'ckb-Arab'],
-            ['name' => 'Kyrgyz', 'code' => 'ky'],
-            ['name' => 'Lao', 'code' => 'lo'],
-            ['name' => 'Latin', 'code' => 'la'],
-            ['name' => 'Latvian', 'code' => 'lv'],
-            ['name' => 'Limburgish', 'code' => 'li'],
-            ['name' => 'Lingala', 'code' => 'ln'],
-            ['name' => 'Lithuanian', 'code' => 'lt'],
-            ['name' => 'Luxembourgish', 'code' => 'lb'],
-            ['name' => 'Macedonian', 'code' => 'mk'],
-            ['name' => 'Malagasy', 'code' => 'mg'],
-            ['name' => 'Malay (Malaysia)', 'code' => 'ms-MY'],
-            ['name' => 'Malay (Singapore)', 'code' => 'ms-SG'],
-            ['name' => 'Malay', 'code' => 'ms'],
-            ['name' => 'Malayalam', 'code' => 'ml'],
-            ['name' => 'Marathi', 'code' => 'mr'],
-            ['name' => 'Mari', 'code' => 'chm'],
-            ['name' => 'Mongolian', 'code' => 'mn'],
-            ['name' => 'Nepali', 'code' => 'ne'],
-            ['name' => 'Norwegian (Bokmål)', 'code' => 'nb'],
-            ['name' => 'Norwegian (Nynorsk)', 'code' => 'nn'],
-            ['name' => 'Norwegian', 'code' => 'no'],
-            ['name' => 'Occitan', 'code' => 'oc'],
-            ['name' => 'Oria', 'code' => 'or'],
-            ['name' => 'Ossetian', 'code' => 'os'],
-            ['name' => 'Pashto', 'code' => 'ps'],
-            ['name' => 'Polish', 'code' => 'pl'],
-            ['name' => 'Portuguese (Brazil)', 'code' => 'pt-BR'],
-            ['name' => 'Portuguese (Portugal)', 'code' => 'pt-PT'],
-            ['name' => 'Portuguese', 'code' => 'pt'],
-            ['name' => 'Punjabi', 'code' => 'pa'],
-            ['name' => 'Rohingya (Latin)', 'code' => 'rhg-Latn'],
-            ['name' => 'Romanian (Moldova)', 'code' => 'ro-MD'],
-            ['name' => 'Romanian (Romania)', 'code' => 'ro-RO'],
-            ['name' => 'Romanian', 'code' => 'ro'],
-            ['name' => 'Rundi', 'code' => 'rn'],
-            ['name' => 'Russian', 'code' => 'ru'],
-            ['name' => 'Sakha', 'code' => 'sah'],
-            ['name' => 'Samoan', 'code' => 'sm'],
-            ['name' => 'Sango', 'code' => 'sg'],
-            ['name' => 'Sanskrit', 'code' => 'sa'],
-            ['name' => 'Sardinian', 'code' => 'sc'],
-            ['name' => 'Serbian (Cyrillic)', 'code' => 'sr-Cyrl'],
-            ['name' => 'Serbian (Latin)', 'code' => 'sr-Latn'],
-            ['name' => 'Shona', 'code' => 'sn'],
-            ['name' => 'Sindhi', 'code' => 'sd'],
-            ['name' => 'Sinhalese', 'code' => 'si'],
-            ['name' => 'Slovak', 'code' => 'sk'],
-            ['name' => 'Slovenian', 'code' => 'sl'],
-            ['name' => 'Somali', 'code' => 'so'],
-            ['name' => 'Spanish (Argentina)', 'code' => 'es-AR'],
-            ['name' => 'Spanish (Mexico)', 'code' => 'es-MX'],
-            ['name' => 'Spanish (Spain)', 'code' => 'es-ES'],
-            ['name' => 'Spanish', 'code' => 'es'],
-            ['name' => 'Sundanese', 'code' => 'su'],
-            ['name' => 'Swahili', 'code' => 'sw'],
-            ['name' => 'Swedish', 'code' => 'sv'],
-            ['name' => 'Tagalog', 'code' => 'tl'],
-            ['name' => 'Tajik', 'code' => 'tg'],
-            ['name' => 'Tamil', 'code' => 'ta'],
-            ['name' => 'Tatar', 'code' => 'tt'],
-            ['name' => 'Telugu', 'code' => 'te'],
-            ['name' => 'Thai', 'code' => 'th'],
-            ['name' => 'Tibetan', 'code' => 'bo'],
-            ['name' => 'Tigrinya', 'code' => 'ti'],
-            ['name' => 'Tongan', 'code' => 'to'],
-            ['name' => 'Tswana', 'code' => 'tn'],
-            ['name' => 'Turkish', 'code' => 'tr'],
-            ['name' => 'Turkmen', 'code' => 'tk'],
-            ['name' => 'Udmurt', 'code' => 'udm'],
-            ['name' => 'Uigur', 'code' => 'ug'],
-            ['name' => 'Ukrainian', 'code' => 'uk'],
-            ['name' => 'Undefined Language', 'code' => ''],
-            ['name' => 'Urdu', 'code' => 'ur'],
-            ['name' => 'Uzbek', 'code' => 'uz-Latn'],
-            ['name' => 'Vietnamese', 'code' => 'vi'],
-            ['name' => 'Wolof', 'code' => 'wo'],
-            ['name' => 'Yiddish', 'code' => 'yi'],
-            ['name' => 'Yoruba', 'code' => 'yo'],
-            ['name' => 'Zulu', 'code' => 'zu'],
+            ['name' => 'Afrikaans', 'code' => 'af-ZA', 'sc_code' => 'af'],
+            ['name' => 'Arabic Unitag', 'code' => 'ar-AA', 'sc_code' => 'ar'],
+            ['name' => 'Belarusian', 'code' => 'be-BY', 'sc_code' => 'be'],
+            ['name' => 'Bulgarian', 'code' => 'bg-BG', 'sc_code' => 'bg'],
+            ['name' => 'Bengali', 'code' => 'bn-BD', 'sc_code' => 'bn'],
+            ['name' => 'Bosnian', 'code' => 'bs-BA', 'sc_code' => 'bs'],
+            ['name' => 'Catalan', 'code' => 'ca-ES', 'sc_code' => 'ca'],
+            ['name' => 'Czech', 'code' => 'cs-CZ', 'sc_code' => 'cs'],
+            ['name' => 'Welsh', 'code' => 'cy-GB', 'sc_code' => 'cy'],
+            ['name' => 'Danish', 'code' => 'da-DK', 'sc_code' => 'da'],
+            ['name' => 'German AT', 'code' => 'de-AT', 'sc_code' => 'de-AT'],
+            ['name' => 'German CH', 'code' => 'de-CH', 'sc_code' => 'de-CH'],
+            ['name' => 'German DE', 'code' => 'de-DE', 'sc_code' => 'de-DE'],
+            ['name' => 'Greek', 'code' => 'el-GR', 'sc_code' => 'el'],
+            ['name' => 'English AU', 'code' => 'en-AU', 'sc_code' => 'en-AU'],
+            ['name' => 'English CA', 'code' => 'en-CA', 'sc_code' => 'en-CA'],
+            ['name' => 'English (United Kingdom)', 'code' => 'en-GB', 'sc_code' => 'en-GB'],
+            ['name' => 'English US', 'code' => 'en-US', 'sc_code' => 'en-US'],
+            ['name' => 'Esperanto', 'code' => 'eo-XX', 'sc_code' => 'eo'],
+            ['name' => 'Spanish', 'code' => 'es-ES', 'sc_code' => 'es-ES'],
+            ['name' => 'Estonian', 'code' => 'et-EE', 'sc_code' => 'et'],
+            ['name' => 'Basque', 'code' => 'eu-ES', 'sc_code' => 'eu'],
+            ['name' => 'Persian', 'code' => 'fa-IR', 'sc_code' => 'fa-IR'],
+            ['name' => 'Finnish', 'code' => 'fi-FI', 'sc_code' => 'fi'],
+            ['name' => 'French CA', 'code' => 'fr-CA', 'sc_code' => 'fr-CA'],
+            ['name' => 'French', 'code' => 'fr-FR', 'sc_code' => 'fr-FR'],
+            ['name' => 'Irish', 'code' => 'ga-IE', 'sc_code' => 'ga'],
+            ['name' => 'Galician', 'code' => 'gl-ES', 'sc_code' => 'gl'],
+            ['name' => 'Hebrew', 'code' => 'he-IL', 'sc_code' => 'he'],
+            ['name' => 'Hindi', 'code' => 'hi-IN', 'sc_code' => 'hi'],
+            ['name' => 'Croatian', 'code' => 'hr-HR', 'sc_code' => 'hr'],
+            ['name' => 'Hungarian', 'code' => 'hu-HU', 'sc_code' => 'hu'],
+            ['name' => 'Armenian', 'code' => 'hy-AM', 'sc_code' => 'hy'],
+            ['name' => 'Bahasa Indonesia', 'code' => 'id-ID', 'sc_code' => 'id'],
+            ['name' => 'Italian', 'code' => 'it-IT', 'sc_code' => 'it-IT'],
+            ['name' => 'Japanese', 'code' => 'ja-JP', 'sc_code' => 'ja'],
+            ['name' => 'Georgian', 'code' => 'ka-GE', 'sc_code' => 'ka'],
+            ['name' => 'Kazakh', 'code' => 'kk-KZ', 'sc_code' => 'kk'],
+            ['name' => 'Khmer', 'code' => 'km-KH', 'sc_code' => 'km'],
+            ['name' => 'Korean', 'code' => 'ko-KR', 'sc_code' => 'ko'],
+            ['name' => 'Lithuanian', 'code' => 'lt-LT', 'sc_code' => 'lt'],
+            ['name' => 'Latvian', 'code' => 'lv-LV', 'sc_code' => 'lv'],
+            ['name' => 'Macedonian', 'code' => 'mk-MK', 'sc_code' => 'mk'],
+            ['name' => 'Malay', 'code' => 'ms-MY', 'sc_code' => 'ms-MY'],
+            ['name' => 'Norwegian Bokmal', 'code' => 'nb-NO', 'sc_code' => 'nb'],
+            ['name' => 'Flemish', 'code' => 'nl-BE', 'sc_code' => 'nl-BE'],
+            ['name' => 'Dutch', 'code' => 'nl-NL', 'sc_code' => 'nl-NL'],
+            ['name' => 'Norwegian Nynorsk', 'code' => 'nn-NO', 'sc_code' => 'nn'],
+            ['name' => 'Polish', 'code' => 'pl-PL', 'sc_code' => 'pl'],
+            ['name' => 'Portuguese Brazil', 'code' => 'pt-BR', 'sc_code' => 'pt-BR'],
+            ['name' => 'Portuguese', 'code' => 'pt-PT', 'sc_code' => 'pt-PT'],
+            ['name' => 'Romanian', 'code' => 'ro-RO', 'sc_code' => 'ro-RO'],
+            ['name' => 'Russian', 'code' => 'ru-RU', 'sc_code' => 'ru'],
+            ['name' => 'Sinhala', 'code' => 'si-LK', 'sc_code' => 'si'],
+            ['name' => 'Slovak', 'code' => 'sk-SK', 'sc_code' => 'sk'],
+            ['name' => 'Slovenian', 'code' => 'sl-SI', 'sc_code' => 'sl'],
+            ['name' => 'Albanian', 'code' => 'sq-AL', 'sc_code' => 'sq'],
+            ['name' => 'Serbian Cyrillic', 'code' => 'sr-RS', 'sc_code' => 'sr-Cyrl'],
+            ['name' => 'Serbian Latin', 'code' => 'sr-YU', 'sc_code' => 'sr-Latn'],
+            ['name' => 'Swedish', 'code' => 'sv-SE', 'sc_code' => 'sv'],
+            ['name' => 'Swahili', 'code' => 'sw-KE', 'sc_code' => 'sw'],
+            ['name' => 'Tamil', 'code' => 'ta-IN', 'sc_code' => 'ta'],
+            ['name' => 'Thai', 'code' => 'th-TH', 'sc_code' => 'th'],
+            ['name' => 'Turkmen', 'code' => 'tk-TM', 'sc_code' => 'tk'],
+            ['name' => 'Turkish', 'code' => 'tr-TR', 'sc_code' => 'tr'],
+            ['name' => 'Uyghur', 'code' => 'ug-CN', 'sc_code' => 'ug'],
+            ['name' => 'Ukrainian', 'code' => 'uk-UA', 'sc_code' => 'uk'],
+            ['name' => 'Vietnamese', 'code' => 'vi-VN', 'sc_code' => 'vi'],
+            ['name' => 'Chinese Simplified', 'code' => 'zh-CN', 'sc_code' => 'zh-Hans'],
+            ['name' => 'Chinese Traditional', 'code' => 'zh-TW', 'sc_code' => 'zh-Hant'],
         ];
     }
+
     /**
      * @param $code
      * @return string
@@ -195,42 +103,33 @@ class LanguageDictionary
         if ($index === false) {
             return false;
         }
-        
+
         return self::getLanguages()[$index]['name'];
     }
 
-    public static function codeConvertToSmartcat($code)
+    /**
+     * @param $code
+     * @return string
+     */
+    public static function getScCodeByCode($code)
     {
-        $languageList = SCHelper::getInstance()->getDirectoriesManager()
-                ->directoriesGet(['type' => 'language'])
-                ->getItems();
+        $index = array_search($code, array_column(self::getLanguages(), 'code'));
 
-        foreach ($languageList as $scLang) {
-            if ($code === $scLang->getId()) {
-                break;
-            }
-            if (strpos($code, $scLang->getId())===0) {
-                $code = $scLang->getId();
-                break;
-            }
+        if ($index === false) {
+            return false;
         }
 
-        return $code;
+        return self::getLanguages()[$index]['sc_code'];
     }
 
     public static function codeConvertToJoomla($code)
     {
-        $languages = JLanguage::getKnownLanguages();
-        $joomlaCodes = array_keys($languages);
+        $index = array_search($code, array_column(self::getLanguages(), 'sc_code'));
 
-        if (!in_array($code, $joomlaCodes)) {
-            foreach ($joomlaCodes as $jCode) {
-                if (strpos($jCode, $code)===0) {
-                    return $jCode;
-                }
-            }
+        if ($index === false) {
+            return false;
         }
- 
-        return $code;
+
+        return self::getLanguages()[$index]['code'];
     }
 }
