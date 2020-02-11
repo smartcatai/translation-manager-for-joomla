@@ -323,7 +323,7 @@ class STMController extends JControllerLegacy
 
                 if ($isNew) {
                     if ($article->check()) {
-                        $article->alias = $article->alias . '-' . $article->language;
+                        $article->alias = $article->alias . '-' . strtolower($project->target_lang);
                         $article->id = null;
 
                         if ($article->store(true)) {
