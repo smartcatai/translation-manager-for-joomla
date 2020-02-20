@@ -34,6 +34,18 @@ class Pkg_St_ManagerInstallerScript
             return false;
         }
 
+        if (!extension_loaded('json')) {
+            JFactory::getApplication()->enqueueMessage('PHP extension JSON is not loaded', 'error');
+
+            return false;
+        }
+
+        if (!extension_loaded('openssl')) {
+            JFactory::getApplication()->enqueueMessage('PHP extension OpenSSL is not loaded', 'error');
+
+            return false;
+        }
+
         return true;
     }
 

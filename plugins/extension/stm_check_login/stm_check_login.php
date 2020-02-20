@@ -38,9 +38,9 @@ class PlgExtensionStm_Check_Login extends JPlugin
      *
      * @since   1.6
      */
-    public function onExtensionBeforeSave($context, &$table, $bool)
+    public function onExtensionBeforeSave($context, $table, $bool)
     {
-        if ($context !== 'com_config.component' || $table->element !== 'com_st_manager') {
+        if ($context !== 'com_config.component' || $table->get('element') !== 'com_st_manager') {
             return true;
         }
 
@@ -51,7 +51,7 @@ class PlgExtensionStm_Check_Login extends JPlugin
         require_once JPATH_LIBRARIES . '/smartcat_api/autoload.php';
         require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/SCHelper.php';
 
-        $params = json_decode($table->params, true);
+        $params = json_decode($table->get('params'), true);
 
         switch ($params['server']) {
             case 'europe':
@@ -68,16 +68,53 @@ class PlgExtensionStm_Check_Login extends JPlugin
                 break;
         }
 
-        $sc = new SmartCat($params['application_id'], $params['api_token'], $server);
+        $smartcat = new SmartCat($params['application_id'], $params['api_token'], $server);
 
         try {
-            $sc->getAccountManager()->accountGetAccountInfo();
+            $smartcat->getAccountManager()->accountGetAccountInfo();
             $params['api_token'] = SCHelper::encryptToken($params['api_token']);
-            $table->params = json_encode($params);
+            $table->bind(['params' => $params]);
         } catch (\Throwable $e) {
             throw new RuntimeException(JText::_('PLG_STM_INCORRECT_CREDENTIALS'));
         }
 
+        try {
+            $this->cronHanler($params);
+        } catch (\Throwable $e) {
+            throw new RuntimeException($e->getMessage());
+        }
+
+        if (!$table->check() || !$table->store()) {
+            throw new RuntimeException(JText::_('PLG_STM_CONFIG_SAVE_ERROR'));
+        }
+
         return true;
+    }
+
+    private function cronHanler($params)
+    {
+        require_once JPATH_ADMINISTRATOR . '/components/com_st_manager/helpers/CronHelper.php';
+
+        $cronState = CronHelper::process(
+            $params['enable_external_cron'],
+            JComponentHelper::getParams('com_st_manager')->get('enable_external_cron'),
+            $params['application_id'],
+            JComponentHelper::getParams('com_st_manager')->get('application_id'),
+            JRoute::_(JURI::root() . 'index.php?option=com_st_manager&task=cron')
+        );
+    }
+
+    private function logEvent($type, $message)
+    {
+        JModelLegacy::addIncludePath(JPATH_ADMINISTRATOR . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR . 'com_st_manager' . DIRECTORY_SEPARATOR . 'models', 'STMModel');
+        /** @var STMModelEvent $model */
+        $model = JModelLegacy::getInstance('Event', 'STMModel', array('ignore_request' => false));
+
+        $eventData = [
+            'type' => $type,
+            'message' => $message
+        ];
+
+        return $model->save($eventData);
     }
 }

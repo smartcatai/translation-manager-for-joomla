@@ -28,7 +28,6 @@ class STMController extends JControllerLegacy
     private $projectHelper;
     private $scHelper;
     private $exportHelper;
-    private $locker;
 
     /** @var ContentModelArticle $articleModel */
     private $articleModel;
@@ -61,7 +60,6 @@ class STMController extends JControllerLegacy
         $this->projectHelper = ProjectHelper::getInstance();
         $this->scHelper = SCHelper::getInstance();
         $this->exportHelper = ExportTranslationHelper::getInstance();
-        $this->locker = new Factory(new PdoStore());
 
         $this->articleModel = parent::getModel('Article', 'ContentModel', array('ignore_request' => true));
         $this->profileModel = parent::getModel('Profile', 'STMModel', array('ignore_request' => true));
@@ -90,6 +88,8 @@ class STMController extends JControllerLegacy
         }
 
         foreach ($projects as $index => $project) {
+            $project->source_lang = LanguageDictionary::getScCodeByCode($project->source_lang);
+            $project->target_lang = LanguageDictionary::getScCodeByCode($project->target_lang);
             $item = $this->articleModel->getItem($project->entity_id);
             $fields = [];
 
@@ -147,7 +147,7 @@ class STMController extends JControllerLegacy
                 'status' => $scDocument->getStatus(),
                 'document_id' => $scDocument->getId(),
                 'task_id' => null,
-                'target_lang' => $scDocument->getTargetLanguage(),
+                'target_lang' => LanguageDictionary::codeConvertToJoomla($scDocument->getTargetLanguage()),
             ];
 
             $this->projectModel->save($data);
@@ -276,12 +276,32 @@ class STMController extends JControllerLegacy
 
                 continue;
             }
+            $db = JFactory::getDBO();
 
             $article = JTable::getInstance('Content', 'JTable');
 
+            require_once JPATH_SITE . '/administrator/components/com_content/models/article.php';
+            $articleModel = new ContentModelArticle();
+
             if (!empty($fields)) {
+                $artdata = [];
                 $article->load($project->entity_id);
-                $article->language = LanguageDictionary::codeConvertToJoomla($project->target_lang);
+
+                $db->setQuery('SELECT id FROM #__content WHERE alias="' . $article->alias . '-' . strtolower($project->target_lang) . '"');
+                $res = $db->loadObject();
+                $isNew = empty($res);
+
+                if (!$isNew) {
+                    $article->load($res->id);
+                }
+
+                $article->language = $project->target_lang;
+
+                foreach ($article as $key => $value) {
+                    if ($key !== "_error") {
+                        $artdata[$key] = $value;
+                    }
+                }
 
                 foreach ($fields as $field => $value) {
                     if ($field === 'articletext') {
@@ -297,24 +317,32 @@ class STMController extends JControllerLegacy
                         }
                         $value = (string) new Registry($value);
                     }
-
                     $article->$field = $value;
+                    $artdata[$field] = $value;
                 }
 
-                $article->alias = $article->alias . '-' . $article->language;
+                if ($isNew) {
+                    if ($article->check()) {
+                        $article->alias = $article->alias . '-' . strtolower($project->target_lang);
+                        $article->id = null;
 
-                if ($article->check()) {
-                    $article->id = null;
-
-                    if ($article->store(true)) {
-                        $documentsDownloadSuccess[] = $project->document_id;
+                        if ($article->store(true)) {
+                            $documentsDownloadSuccess[] = $project->document_id;
+                        } else {
+                            $documentsDownloadError[] = $project->document_id;
+                            $this->errorMessages[] = $article->getError();
+                        }
                     } else {
                         $documentsDownloadError[] = $project->document_id;
                         $this->errorMessages[] = $article->getError();
                     }
                 } else {
-                    $documentsDownloadError[] = $project->document_id;
-                    $this->errorMessages[] = $article->getError();
+                    if ($articleModel->save($artdata)) {
+                        $documentsDownloadSuccess[] = $project->document_id;
+                    } else {
+                        $documentsDownloadError[] = $project->document_id;
+                        $this->errorMessages[] = $articleModel->getError();
+                    }
                 }
             }
         }
@@ -427,11 +455,11 @@ class STMController extends JControllerLegacy
      */
     private function getResponse(callable $task)
     {
-        $lock = $this->locker->createLock('stm-cron-task', 30, false);
+        $params = JComponentHelper::getParams('com_st_manager');
 
-        $lock->acquire();
+        if (time() - intval($params->get('last_cron_start')) > 30) {
+            $this->updateLastCronStart();
 
-        if ($lock->isAcquired()) {
             if ($this->scHelper->checkAccess()) {
                 $task();
             } else {
@@ -507,5 +535,24 @@ class STMController extends JControllerLegacy
         $this->logger->error($e->getMessage(), $message);
 
         return $saved;
+    }
+
+    private function updateLastCronStart()
+    {
+        $component = JComponentHelper::getComponent('com_st_manager');
+        $params = $component->getParams();
+
+        $params->set('last_cron_start', time());
+
+        $table = JTable::getInstance('extension');
+        $table->load($component->id);
+        $table->bind(array('params' => $params->toString()));
+
+        // Save to database
+        if (!$table->check() || !$table->store()) {
+            return false;
+        }
+
+        return true;
     }
 }

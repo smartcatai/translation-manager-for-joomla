@@ -47,8 +47,20 @@
 				class="btn-group btn-group-yesno"
 				default="0"
 		>
-			<option value="1">JYES</option>
-			<option value="0">JNO</option>
+			<option value="1">JON</option>
+			<option value="0">JOFF</option>
+		</field>
+		<field
+				name="enable_external_cron"
+				type="radio"
+				label="COM_SMARTCAT_ENABLE_EXTERNAL_CRON_LABEL"
+				description="COM_SMARTCAT_ENABLE_EXTERNAL_CRON_DESCRIPTION"
+				hint="COM_SMARTCAT_ENABLE_EXTERNAL_CRON_HINT"
+				class="btn-group btn-group-yesno"
+				default="0"
+		>
+			<option value="1">JON</option>
+			<option value="0">JOFF</option>
 		</field>
 		<field type="spacer" />
 		<field
@@ -57,5 +69,6 @@
 				label="COM_SMARTCAT_AUTH_NOTE_NAME"
 				description="COM_SMARTCAT_AUTH_NOTE_DESCRIPTION"
 		/>
+        <field name="last_cron_start" type="hidden"/>
 	</fieldset>
 </config>
