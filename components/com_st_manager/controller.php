@@ -276,12 +276,32 @@ class STMController extends JControllerLegacy
 
                 continue;
             }
+            $db = JFactory::getDBO();
 
             $article = JTable::getInstance('Content', 'JTable');
 
+            require_once JPATH_SITE . '/administrator/components/com_content/models/article.php';
+            $articleModel = new ContentModelArticle();
+
             if (!empty($fields)) {
+                $artdata = [];
                 $article->load($project->entity_id);
-                $article->language = LanguageDictionary::codeConvertToJoomla($project->target_lang);
+
+                $db->setQuery('SELECT id FROM #__content WHERE alias="' . $article->alias . '-' . strtolower($project->target_lang) . '"');
+                $res = $db->loadObject();
+                $isNew = empty($res);
+
+                if (!$isNew) {
+                    $article->load($res->id);
+                }
+
+                $article->language = $project->target_lang;
+
+                foreach ($article as $key => $value) {
+                    if ($key !== "_error") {
+                        $artdata[$key] = $value;
+                    }
+                }
 
                 foreach ($fields as $field => $value) {
                     if ($field === 'articletext') {
@@ -297,24 +317,32 @@ class STMController extends JControllerLegacy
                         }
                         $value = (string) new Registry($value);
                     }
-
                     $article->$field = $value;
+                    $artdata[$field] = $value;
                 }
 
-                $article->alias = $article->alias . '-' . $article->language;
+                if ($isNew) {
+                    if ($article->check()) {
+                        $article->alias = $article->alias . '-' . strtolower($project->target_lang);
+                        $article->id = null;
 
-                if ($article->check()) {
-                    $article->id = null;
-
-                    if ($article->store(true)) {
-                        $documentsDownloadSuccess[] = $project->document_id;
+                        if ($article->store(true)) {
+                            $documentsDownloadSuccess[] = $project->document_id;
+                        } else {
+                            $documentsDownloadError[] = $project->document_id;
+                            $this->errorMessages[] = $article->getError();
+                        }
                     } else {
                         $documentsDownloadError[] = $project->document_id;
                         $this->errorMessages[] = $article->getError();
                     }
                 } else {
-                    $documentsDownloadError[] = $project->document_id;
-                    $this->errorMessages[] = $article->getError();
+                    if ($articleModel->save($artdata)) {
+                        $documentsDownloadSuccess[] = $project->document_id;
+                    } else {
+                        $documentsDownloadError[] = $project->document_id;
+                        $this->errorMessages[] = $articleModel->getError();
+                    }
                 }
             }
         }
